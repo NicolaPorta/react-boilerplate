@@ -16,7 +16,12 @@ const testNicolaReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case 'TO_DO':
-        draft.toDo = action.toDo;
+        break;
+      case 'TO_DO_SUCCESS':
+        draft.toDo = action.payload;
+        break;
+      case 'TO_DO_ERROR':
+        draft.err = action.payload;
         break;
     }
   });

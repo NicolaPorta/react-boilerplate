@@ -12,12 +12,11 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { makeSelectToDo } from './selectors';
-import { changeToDo } from './actions';
-import { map } from 'async';
+import { clickToDo } from './actions';
 
-export function TestNicola({message, change}) {
+export function TestNicola({toDoClick}) {
   return (
-    <button onClick={() => console.log(change())} >{message}</button>
+    <button onClick={(e) => toDoClick(e)}>CLICK</button>
   );
 }
 
@@ -36,10 +35,12 @@ const mapStateToProps = createSelector(
 
 const mapDispatchToProps = dispatch => {
   return {
-    change: () => dispatch(changeToDo())
-
-  }
+    toDoClick: () => dispatch(clickToDo())
+  } 
 }
- 
+
+// const mapDispatchToProps = {
+//   change: changeToDo()
+// }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TestNicola);

@@ -5,9 +5,22 @@
  */
 // import axios from 'axios';
 
-export function changeToDo() {
+export function changeToDo(toDo) {
   return {
-    type: 'TO_DO',
-    // toDo: axios.get('https://jsonplaceholder.typicode.com/todos/1').then(e => e.data),
+    type: 'TO_DO_SUCCESS',
+    payload: toDo
+  };
+}
+
+export function changeToDoError(err) {
+  return {
+    type: 'TO_DO_ERROR',
+    payload: err
+  };
+}
+
+export function clickToDo() {
+  return {
+    type: 'TO_DO_CLICK'
   };
 }
