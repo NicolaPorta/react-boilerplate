@@ -16,6 +16,7 @@ import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import TestNicola from 'containers/TestNicola';
 
 import GlobalStyle from '../../global-styles';
 
@@ -41,6 +42,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
+        <Route path="/testNicola" component={TestNicola} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
