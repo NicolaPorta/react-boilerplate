@@ -27,7 +27,7 @@ export function TestNicola({ toDoClick, toDoList }) {
         CLICK
       </button>
       {toDoList ? (
-        toDoList.map(toDo => <p>{toDo.title}</p>)
+        toDoList.toDo.map(toDo => <p key={toDo.id}>{toDo.title}</p>)
       ) : (
         <em>To Do List not exist</em>
       )}
@@ -37,18 +37,11 @@ export function TestNicola({ toDoClick, toDoList }) {
 
 TestNicola.propTypes = {
   toDoClick: PropTypes.func,
-  toDoList: PropTypes.array,
+  toDoList: PropTypes.object,
 };
 
-// const mapStateToProps = createSelector(
-//   makeSelectToDo(),
-//   toDo => ({
-//     toDo,
-//   }),
-// );
-
 const mapStateToProps = state => ({
-  toDoList: state.toDo,
+  toDoList: state.ToDos,
 });
 
 const mapDispatchToProps = dispatch => ({
