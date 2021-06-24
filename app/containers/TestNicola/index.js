@@ -3,7 +3,6 @@
  * ToDoList
  *
  */
-
 import React from 'react';
 // import PropTypes
 import PropTypes from 'prop-types';
