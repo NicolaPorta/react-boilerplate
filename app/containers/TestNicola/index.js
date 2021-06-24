@@ -7,40 +7,55 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-
-import { makeSelectToDo } from './selectors';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
+import reducer from './reducer';
+import saga from './saga';
 import { clickToDo } from './actions';
 
-export function TestNicola({toDoClick}) {
+const key = 'ToDos';
+
+export function TestNicola({ toDoClick, toDoList }) {
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
   return (
-    <button onClick={(e) => toDoClick(e)}>CLICK</button>
+    <React.Fragment>
+      <button type="submit" onClick={e => toDoClick(e)}>
+        CLICK
+      </button>
+      {toDoList ? (
+        toDoList.map(toDo => <p>{toDo.title}</p>)
+      ) : (
+        <em>To Do List not exist</em>
+      )}
+    </React.Fragment>
   );
 }
 
-// TestNicola.propTypes = {
-//   locale: PropTypes.string,
-//   messages: PropTypes.object,
-//   children: PropTypes.element.isRequired,
-// };
+TestNicola.propTypes = {
+  toDoClick: PropTypes.func,
+  toDoList: PropTypes.array,
+};
 
-const mapStateToProps = createSelector(
-  makeSelectToDo(),
-  toDo => ({
-    toDo,
-  }),
-);
+// const mapStateToProps = createSelector(
+//   makeSelectToDo(),
+//   toDo => ({
+//     toDo,
+//   }),
+// );
 
-const mapDispatchToProps = dispatch => {
-  return {
-    toDoClick: () => dispatch(clickToDo())
-  } 
-}
+const mapStateToProps = state => ({
+  toDoList: state.toDo,
+});
 
-// const mapDispatchToProps = {
-//   change: changeToDo()
-// }
+const mapDispatchToProps = dispatch => ({
+  toDoClick: () => dispatch(clickToDo()),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(TestNicola);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TestNicola);
