@@ -1,22 +1,19 @@
 /**
- * Gets the repositories of the user from Github
+ * Gets the list of the toDos from JsonPlaceholder
  */
 
-import { call, put, takeLatest } from 'redux-saga/effects';
-import request from 'utils/request';
+import { put, takeLatest } from 'redux-saga/effects';
 import { changeToDo, changeToDoError } from './actions';
-
+import proxy from './services/axiosService';
 import { CLICK } from './constants';
 
 /**
- * Github repos request/response handler
+ * ToDo list request/response handler
  */
 export function* getToDo() {
-  // Select username from store
-  const requestURL = `https://jsonplaceholder.typicode.com/todos`;
   try {
-    // Call our request helper (see 'utils/request')
-    const toDos = yield call(request, requestURL);
+    // Call our request helper (see 'services/axiosService')
+    const toDos = yield proxy().then(res => res.data);
     yield put(changeToDo(toDos));
   } catch (err) {
     yield put(changeToDoError(err));
