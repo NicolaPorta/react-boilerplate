@@ -5,9 +5,9 @@ import { TO_DO_API } from '../constants';
 const proxy = axios.create();
 
 // axios instance setting
-export default function axiosCall() {
+export default function axiosCall(type) {
   return proxy({
-    url: `${TO_DO_API}todos`,
+    baseURL: TO_DO_API + type,
     method: 'get',
   });
 }
