@@ -1,7 +1,7 @@
 /**
  * COMMON WEBPACK CONFIGURATION
  */
-
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -113,6 +113,11 @@ module.exports = options => ({
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
+    }),
+    new Dotenv({
+      path: `./.env`,
+      safe: true,
+      expand: true,
     }),
   ]),
   resolve: {

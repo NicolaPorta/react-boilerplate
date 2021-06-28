@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { TO_DO_API } from '../constants';
 
 // axios instance creation
 const proxy = axios.create();
+proxy.defaults.baseURL = process.env.URL_TO_DO_API;
 
 // axios instance setting
-export default function axiosCall(type) {
+export default function axiosCall() {
   return proxy({
-    baseURL: TO_DO_API + type,
     method: 'get',
+    url: 'todos',
   });
 }

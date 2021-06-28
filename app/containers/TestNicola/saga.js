@@ -5,7 +5,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { changeToDo, changeToDoError } from './actions';
 import getToDoList from './services/axiosService';
-import { CLICK, TO_DO_LIST } from './constants';
+import { CLICK } from './constants';
 
 /**
  * ToDo list request/response handler
@@ -13,7 +13,7 @@ import { CLICK, TO_DO_LIST } from './constants';
 export function* getToDo() {
   try {
     // Call our request helper (see 'services/axiosService')
-    const toDos = yield call(getToDoList, TO_DO_LIST);
+    const toDos = yield call(getToDoList);
     yield put(changeToDo(toDos.data));
   } catch (err) {
     yield put(changeToDoError(err));
