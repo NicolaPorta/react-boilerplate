@@ -1,26 +1,30 @@
 /*
  *
- * LanguageProvider actions
+ * ToDo actions
  *
  */
-// import axios from 'axios';
 
+import { CALL_TODO_REJECTED, CALL_TODO_SUCCESS, CLICK } from './constants';
+
+// toDo call success
 export function changeToDo(toDo) {
   return {
-    type: 'TO_DO_SUCCESS',
-    payload: toDo
+    type: CALL_TODO_SUCCESS,
+    payload: toDo,
   };
 }
 
+// toDo call rejected
 export function changeToDoError(err) {
   return {
-    type: 'TO_DO_ERROR',
-    payload: err
+    type: CALL_TODO_REJECTED,
+    payload: err,
   };
 }
 
+// toDo click for activate saga middleware
 export function clickToDo() {
   return {
-    type: 'TO_DO_CLICK'
+    type: CLICK,
   };
 }

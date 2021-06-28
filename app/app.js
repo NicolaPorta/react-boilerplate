@@ -4,7 +4,6 @@
  * This is the entry file for the application, only setup and boilerplate
  * code.
  */
-
 // Needed for redux-saga es6 generator support
 import '@babel/polyfill';
 
