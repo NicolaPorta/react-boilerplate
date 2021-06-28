@@ -30,7 +30,7 @@ export function TestNicola({ toDoClick, toDoList }) {
         CLICK
       </button>
       {toDoList && toDoList.toDo.length > 0 ? (
-        toDoList.toDo.map(toDo => <p key={toDo.id}>{toDo.title}</p>)
+        toDoList.toDo.map(toDo => <p key={toDo.toDo}>{toDo.toDo}</p>)
       ) : (
         <em>To Do List does not exist</em>
       )}
