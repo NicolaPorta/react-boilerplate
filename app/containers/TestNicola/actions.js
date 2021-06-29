@@ -4,7 +4,13 @@
  *
  */
 
-import { CALL_TODO_REJECTED, CALL_TODO_SUCCESS, CLICK } from './constants';
+import {
+  CALL_TODO_REJECTED,
+  CALL_TODO_SUCCESS,
+  CLICK,
+  DELETE_TODO,
+  DELETE_TODO_ERROR,
+} from './constants';
 
 // toDo call success
 export function changeToDo(toDo) {
@@ -26,5 +32,21 @@ export function changeToDoError(err) {
 export function clickToDo() {
   return {
     type: CLICK,
+  };
+}
+
+export function clickDeleteToDo(toDo, toDoList) {
+  return {
+    type: DELETE_TODO,
+    payload: {
+      toDo,
+      toDoList,
+    },
+  };
+}
+
+export function clickDeleteToDoError() {
+  return {
+    type: DELETE_TODO_ERROR,
   };
 }

@@ -14,12 +14,12 @@ import { useInjectSaga } from 'utils/injectSaga';
 
 import reducer from './reducer';
 import saga from './saga';
-import { clickToDo } from './actions';
+import { clickToDo, clickDeleteToDo } from './actions';
 
 // create a id key for the injection
 const key = 'ToDos';
 
-export function TestNicola({ toDoClick, toDoList }) {
+export function TestNicola({ toDoClick, deleteClick, toDoList }) {
   // inject Hooks for reducers and sagas
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -29,8 +29,16 @@ export function TestNicola({ toDoClick, toDoList }) {
       <button type="submit" onClick={e => toDoClick(e)}>
         CLICK
       </button>
+      {/* refactoring */}
       {toDoList && toDoList.toDo.length > 0 ? (
-        toDoList.toDo.map(toDo => <p key={toDo.toDo}>{toDo.toDo}</p>)
+        toDoList.toDo.map(toDo => (
+          <p key={toDo.toDo}>
+            {toDo.toDo}{' '}
+            <button type="submit" onClick={() => deleteClick(toDo.toDo)}>
+              Delete
+            </button>
+          </p>
+        ))
       ) : (
         <em>To Do List does not exist</em>
       )}
@@ -41,6 +49,7 @@ export function TestNicola({ toDoClick, toDoList }) {
 // set PropTypes
 TestNicola.propTypes = {
   toDoClick: PropTypes.func,
+  deleteClick: PropTypes.func,
   toDoList: PropTypes.object,
 };
 
@@ -51,6 +60,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toDoClick: () => dispatch(clickToDo()),
+  deleteClick: payload => dispatch(clickDeleteToDo(payload)),
 });
 
 // connect the store

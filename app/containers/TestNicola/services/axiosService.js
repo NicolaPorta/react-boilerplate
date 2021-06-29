@@ -1,3 +1,4 @@
+// services a fianco alla cartella containers
 import axios from 'axios';
 
 // axios instance creation
@@ -9,5 +10,13 @@ export default function getToDoList() {
   return proxy({
     method: 'get',
     url: 'toDos',
+  });
+}
+// separare le funzioni in più file
+export function deleteToDo(toDo) {
+  // meglio passare un oggetto
+  return proxy({
+    method: 'delete',
+    url: `toDos/${toDo}`,
   });
 }
