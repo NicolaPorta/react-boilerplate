@@ -18,9 +18,9 @@ const makeSelectToDo = () =>
   );
 
 const makeSelectId = () =>
-createSelector(
-  selectId,
-  toDoState => toDoState.id,
-);
+  createSelector(
+    selectId,
+    toDoState => toDoState.id,
+  );
 
-export {selectId, selectTodo, makeSelectToDo, makeSelectId };
+export { selectId, selectTodo, makeSelectToDo, makeSelectId };

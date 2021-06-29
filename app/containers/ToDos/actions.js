@@ -35,13 +35,10 @@ export function clickToDo() {
   };
 }
 
-export function clickDeleteToDo(toDo, toDoList) {
+export function clickDeleteToDo(toDo) {
   return {
     type: DELETE_TODO,
-    payload: {
-      toDo,
-      toDoList,
-    },
+    payload: toDo,
   };
 }
 

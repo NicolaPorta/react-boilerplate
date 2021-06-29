@@ -1,6 +1,6 @@
 /*
  *
- * LanguageProvider reducer
+ * ToDoList reducer
  *
  */
 
@@ -13,11 +13,10 @@ import {
 
 export const initialState = {
   toDo: [],
-  id: 1,
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const testNicolaReducer = (state = initialState, action) =>
+const toDosReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case CALL_TODO_SUCCESS:
@@ -27,11 +26,9 @@ const testNicolaReducer = (state = initialState, action) =>
         draft.err = action.payload;
         break;
       case DELETE_TODO:
-        draft.toDo = state.toDo.filter(
-          toDo => toDo.toDo !== action.payload.toDo,
-        );
+        draft.toDo = state.toDo.filter(toDo => toDo.id !== action.payload.id);
         break;
     }
   });
 
-export default testNicolaReducer;
+export default toDosReducer;

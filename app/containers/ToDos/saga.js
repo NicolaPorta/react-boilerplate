@@ -4,7 +4,8 @@
 
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { changeToDo, changeToDoError, clickDeleteToDoError } from './actions';
-import getToDoList, { deleteToDo } from './services/axiosService';
+import getToDoList from '../../services/axiosGetToDo';
+import deleteToDo from '../../services/axiosDeleteToDo';
 import { CLICK, DELETE_TODO } from './constants';
 
 /**
@@ -12,7 +13,7 @@ import { CLICK, DELETE_TODO } from './constants';
  */
 export function* getToDo() {
   try {
-    // Call our request helper (see 'services/axiosService')
+    // Call our request helper (see 'services/axiosGetToDo')
     const toDos = yield call(getToDoList);
     yield put(changeToDo(toDos.data));
   } catch (err) {
@@ -21,10 +22,10 @@ export function* getToDo() {
 }
 
 export function* toDoDelete(action) {
-  const toDoDeleted = action.toDo.replace(/\s+/g, '-').toLowerCase();
+  const { id } = action.payload;
   try {
-    // Call our request helper (see 'services/axiosService')
-    yield call(deleteToDo, toDoDeleted);
+    // Call our request helper (see 'services/axiosDeleteToDo')
+    yield call(deleteToDo, id);
   } catch (err) {
     yield clickDeleteToDoError(err);
   }

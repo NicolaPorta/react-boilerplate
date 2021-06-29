@@ -17,24 +17,25 @@ import saga from './saga';
 import { clickToDo, clickDeleteToDo } from './actions';
 
 // create a id key for the injection
-const key = 'ToDos';
+const key = 'toDos';
 
-export function TestNicola({ toDoClick, deleteClick, toDoList }) {
+export function ToDos({ toDoClick, deleteClick, toDoList }) {
   // inject Hooks for reducers and sagas
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  const toDoListCount = (toDoList && toDoList.toDo.length) || 0;
 
   return (
     <React.Fragment>
       <button type="submit" onClick={e => toDoClick(e)}>
         CLICK
       </button>
-      {/* refactoring */}
-      {toDoList && toDoList.toDo.length > 0 ? (
+      {toDoListCount ? (
         toDoList.toDo.map(toDo => (
-          <p key={toDo.toDo}>
-            {toDo.toDo}{' '}
-            <button type="submit" onClick={() => deleteClick(toDo.toDo)}>
+          <p key={toDo.id}>
+            {toDo.toDo}
+            <button type="submit" onClick={() => deleteClick(toDo)}>
               Delete
             </button>
           </p>
@@ -47,7 +48,7 @@ export function TestNicola({ toDoClick, deleteClick, toDoList }) {
 }
 
 // set PropTypes
-TestNicola.propTypes = {
+ToDos.propTypes = {
   toDoClick: PropTypes.func,
   deleteClick: PropTypes.func,
   toDoList: PropTypes.object,
@@ -55,7 +56,7 @@ TestNicola.propTypes = {
 
 // map props and functions
 const mapStateToProps = state => ({
-  toDoList: state.ToDos,
+  toDoList: state.toDos,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -67,4 +68,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TestNicola);
+)(ToDos);

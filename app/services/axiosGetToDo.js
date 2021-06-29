@@ -12,11 +12,3 @@ export default function getToDoList() {
     url: 'toDos',
   });
 }
-// separare le funzioni in più file
-export function deleteToDo(toDo) {
-  // meglio passare un oggetto
-  return proxy({
-    method: 'delete',
-    url: `toDos/${toDo}`,
-  });
-}
