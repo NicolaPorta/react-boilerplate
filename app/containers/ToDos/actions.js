@@ -7,7 +7,7 @@
 import {
   CALL_TODO_REJECTED,
   CALL_TODO_SUCCESS,
-  CLICK,
+  CALL_TODO_LIST,
   DELETE_TODO,
   DELETE_TODO_ERROR,
 } from './constants';
@@ -31,7 +31,7 @@ export function changeToDoError(err) {
 // toDo click for activate saga middleware
 export function clickToDo() {
   return {
-    type: CLICK,
+    type: CALL_TODO_LIST,
   };
 }
 

@@ -4,9 +4,9 @@
 
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { changeToDo, changeToDoError, clickDeleteToDoError } from './actions';
-import getToDoList from '../../services/axiosGetToDo';
-import deleteToDo from '../../services/axiosDeleteToDo';
-import { CLICK, DELETE_TODO } from './constants';
+import getToDoList from '../../services/getToDoList';
+import deleteToDo from '../../services/deleteToDo';
+import { CALL_TODO_LIST, DELETE_TODO } from './constants';
 
 /**
  * ToDo list request/response handler
@@ -36,5 +36,5 @@ export function* toDoDelete(action) {
  */
 export default function* getToDoData() {
   yield takeLatest(DELETE_TODO, toDoDelete);
-  yield takeLatest(CLICK, getToDo);
+  yield takeLatest(CALL_TODO_LIST, getToDo);
 }
