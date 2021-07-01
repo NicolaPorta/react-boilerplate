@@ -34,7 +34,7 @@ export function ToDos({ toDoClick, deleteClick, toDoList }) {
       {toDoListCount ? (
         toDoList.toDo.map(toDo => (
           <p key={toDo.id}>
-            {toDo.toDo}
+            {toDo.text}
             <button type="submit" onClick={() => deleteClick(toDo)}>
               Delete
             </button>
