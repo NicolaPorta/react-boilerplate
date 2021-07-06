@@ -7,6 +7,7 @@ import { changeToDo, changeToDoError, clickDeleteToDoError } from './actions';
 import getToDoList from '../../services/getToDoList';
 import deleteToDo from '../../services/deleteToDo';
 import { CALL_TODO_LIST, DELETE_TODO } from './constants';
+import schema from '../../schemas/ToDos/getToDoListValidation';
 
 /**
  * ToDo list request/response handler
@@ -15,7 +16,9 @@ export function* getToDo() {
   try {
     // Call our request helper (see 'services/axiosGetToDo')
     const toDos = yield call(getToDoList);
-    yield put(changeToDo(toDos.data));
+    const validation = schema.validate(toDos.data);
+    if (validation.error) alert(`${validation.error.message}`);
+    else yield put(changeToDo(toDos.data));
   } catch (err) {
     yield put(changeToDoError(err));
   }
