@@ -14,7 +14,7 @@ import schema from '../../schemas/ToDos/getToDoListValidation';
  */
 export function* getToDo() {
   try {
-    // Call our request helper (see 'services/axiosGetToDo')
+    // Call our request helper (see 'services/getToDoList')
     const toDos = yield call(getToDoList);
     const validation = schema.validate(toDos.data);
     if (validation.error) alert(`${validation.error.message}`);
