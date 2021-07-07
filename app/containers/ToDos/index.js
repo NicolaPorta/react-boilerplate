@@ -24,6 +24,13 @@ export function ToDos({ toDoClick, deleteClick, toDoList }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
+  /* eslint-disable no-underscore-dangle */
+  const c = {
+    _id: 'test',
+  };
+
+  c._id = 'ciao';
+
   const toDoListCount = (toDoList && toDoList.toDo.length) || 0;
 
   return (

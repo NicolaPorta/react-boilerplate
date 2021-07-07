@@ -8,7 +8,7 @@ export default function getToDoList() {
     url: 'toDos',
   }).then(res => {
     const validation = schema.validate(res.data);
-    if (validation.error) return console.log(validation.error.message);
+    if (validation.error) return validation.error.message;
     return res;
   });
 }
