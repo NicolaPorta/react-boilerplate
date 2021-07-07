@@ -1,10 +1,10 @@
 import Joi from 'joi';
-
+/* eslint-disable no-underscore-dangle */
 const schema = Joi.array().items(
   Joi.object({
-    id: Joi.string().required(),
+    _id: Joi.string().required(),
     text: Joi.string().required(),
-    v: Joi.number(),
+    __v: Joi.number(),
   }),
 );
 

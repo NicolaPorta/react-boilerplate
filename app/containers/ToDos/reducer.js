@@ -16,6 +16,7 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 const toDosReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
@@ -26,7 +27,7 @@ const toDosReducer = (state = initialState, action) =>
         draft.err = action.payload;
         break;
       case DELETE_TODO:
-        draft.toDo = state.toDo.filter(toDo => toDo.id !== action.payload.id);
+        draft.toDo = state.toDo.filter(toDo => toDo.id !== action.payload._id);
         break;
     }
   });

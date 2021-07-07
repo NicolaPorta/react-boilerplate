@@ -25,11 +25,6 @@ export function ToDos({ toDoClick, deleteClick, toDoList }) {
   useInjectSaga({ key, saga });
 
   /* eslint-disable no-underscore-dangle */
-  const c = {
-    _id: 'test',
-  };
-
-  c._id = 'ciao';
 
   const toDoListCount = (toDoList && toDoList.toDo.length) || 0;
 
@@ -40,7 +35,7 @@ export function ToDos({ toDoClick, deleteClick, toDoList }) {
       </button>
       {toDoListCount ? (
         toDoList.toDo.map(toDo => (
-          <p key={toDo.id}>
+          <p key={toDo._id}>
             {toDo.text}
             <button type="submit" onClick={() => deleteClick(toDo)}>
               Delete
