@@ -26,9 +26,11 @@ const toDosReducer = (state = initialState, action) =>
       case CALL_TODO_REJECTED:
         draft.err = action.payload;
         break;
-      case DELETE_TODO:
-        draft.toDo = state.toDo.filter(toDo => toDo.id !== action.payload._id);
+      case DELETE_TODO: {
+        const { _id } = action.payload;
+        draft.toDo = state.toDo.filter(toDo => toDo.id !== _id);
         break;
+      }
     }
   });
 
