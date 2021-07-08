@@ -8,8 +8,10 @@ import {
   CALL_TODO_REJECTED,
   CALL_TODO_SUCCESS,
   CALL_TODO_LIST,
+  CALL_ADD_TO_DO,
   DELETE_TODO,
   DELETE_TODO_ERROR,
+  ADD_TO_DO_SUCCESS,
 } from './constants';
 
 // toDo call success
@@ -45,5 +47,19 @@ export function clickDeleteToDo(toDo) {
 export function clickDeleteToDoError() {
   return {
     type: DELETE_TODO_ERROR,
+  };
+}
+
+export function addToDo(toDo) {
+  return {
+    type: CALL_ADD_TO_DO,
+    payload: toDo,
+  };
+}
+
+export function addToDoInList(toDo) {
+  return {
+    type: ADD_TO_DO_SUCCESS,
+    payload: toDo,
   };
 }
