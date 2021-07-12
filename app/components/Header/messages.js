@@ -20,4 +20,8 @@ export default defineMessages({
     id: `${scope}.testNicola`,
     defaultMessage: 'ToDoList',
   },
+  users: {
+    id: `${scope}.users`,
+    defaultMessage: 'Login',
+  },
 });

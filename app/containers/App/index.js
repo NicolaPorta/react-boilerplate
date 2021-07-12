@@ -17,6 +17,7 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import ToDos from 'containers/ToDos';
+import Login from 'containers/Login';
 
 import GlobalStyle from '../../global-styles';
 
@@ -43,6 +44,7 @@ export default function App() {
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
         <Route path="/toDos" component={ToDos} />
+        <Route path="/login" component={Login} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />

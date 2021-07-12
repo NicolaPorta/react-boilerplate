@@ -24,6 +24,9 @@ function Header() {
         <HeaderLink to="/toDos">
           <FormattedMessage {...messages.toDos} />
         </HeaderLink>
+        <HeaderLink to="/login">
+          <FormattedMessage {...messages.users} />
+        </HeaderLink>
       </NavBar>
     </div>
   );
