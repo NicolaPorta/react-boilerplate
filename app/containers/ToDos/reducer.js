@@ -17,7 +17,6 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
-
 const toDosReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
