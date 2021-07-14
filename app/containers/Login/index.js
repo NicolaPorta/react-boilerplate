@@ -10,26 +10,23 @@ import { useInjectSaga } from 'utils/injectSaga';
 // import reducer from './reducer';
 import saga from './saga';
 import { userLogin } from './actions';
-
 // create a id key for the injection
 const key = 'login';
 
 export function Login({ requestUserLogin }) {
-  // inject Hooks for reducers and sagas
-  // useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   let email;
   let password;
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={async e => {
         e.preventDefault();
         const info = {
           email: email.value,
           password: password.value,
         };
-        requestUserLogin(info);
+        await requestUserLogin(info);
       }}
     >
       <div>
@@ -65,12 +62,16 @@ Login.propTypes = {
   requestUserLogin: PropTypes.func,
 };
 
+const mapStateToProps = state => ({
+  auth: state.global.userLogin,
+});
+
 const mapDispatchToProps = dispatch => ({
   requestUserLogin: payload => dispatch(userLogin(payload)),
 });
 
 // connect the store
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(Login);

@@ -6,7 +6,6 @@
  * add it to the switch statement in the reducer function
  *
  */
-
 import produce from 'immer';
 import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
 import { LOGIN_SUCCESS_ACTION, LOGIN_ERROR_ACTION } from '../Login/constants';
@@ -19,6 +18,7 @@ export const initialState = {
   userData: {
     repositories: false,
   },
+  userLogin: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -43,9 +43,7 @@ const appReducer = (state = initialState, action) =>
         break;
 
       case LOGIN_SUCCESS_ACTION: {
-        const { name, surname, accessToken } = action.payload;
-        document.cookie = `accessToken=${accessToken}; expires=Thu, 25 Dec 2021 12:00:00 UTC; path=`;
-        console.log(document.cookie);
+        const { name, surname } = action.payload;
         draft.userLogin = {
           name,
           surname,
@@ -55,6 +53,7 @@ const appReducer = (state = initialState, action) =>
 
       case LOGIN_ERROR_ACTION:
         draft.err = action.payload;
+        draft.userLogin = {};
         break;
     }
   });
