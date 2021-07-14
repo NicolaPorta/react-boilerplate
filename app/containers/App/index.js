@@ -37,15 +37,19 @@ const AppWrapper = styled.div`
 `;
 
 export function App({ successLogin, username, errorLogin }) {
-  const [login, setLogin] = useState();
+  const [login, setLogin] = useState('notLogged');
   useEffect(() => {
     async function validation() {
-      const auth = await authSessionUser().then(res => res.data);
-      if (auth.success) {
+      try {
+        const auth = await authSessionUser().then(res => res.data);
         setLogin('isLogged');
         await successLogin(auth);
-      } else {
+        // console.log(`success ${login}`);
+      } catch (error) {
+        // console.log(error);
         setLogin('notLogged');
+        await errorLogin(error);
+        // console.log(`error ${login}`);
       }
     }
     validation();
@@ -67,9 +71,10 @@ export function App({ successLogin, username, errorLogin }) {
             type="submit"
             onClick={() => {
               Cookies.remove('accessToken');
-              errorLogin({ error: 'Unauthorized' });
+              errorLogin({ error: 'LOGOUT' });
             }}
           >
+            {console.log(login)}
             Logout
           </button>
         </div>
