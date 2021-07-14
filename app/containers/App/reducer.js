@@ -48,6 +48,7 @@ const appReducer = (state = initialState, action) =>
           name,
           surname,
         };
+        delete draft.err;
         break;
       }
 

@@ -36,7 +36,7 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ successLogin, username }) {
+export function App({ successLogin, username, errorLogin }) {
   const [login, setLogin] = useState();
   useEffect(() => {
     async function validation() {
@@ -67,7 +67,7 @@ export function App({ successLogin, username }) {
             type="submit"
             onClick={() => {
               Cookies.remove('accessToken');
-              successLogin({});
+              errorLogin({ error: 'Unauthorized' });
             }}
           >
             Logout
@@ -78,7 +78,6 @@ export function App({ successLogin, username }) {
       )}
       <Header />
       <Switch>
-        {/* {user === {} ? <Redirect to="/login" /> : ''} */}
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
         <Route path="/toDos" component={ToDos} />
@@ -93,6 +92,7 @@ export function App({ successLogin, username }) {
 
 App.propTypes = {
   successLogin: PropTypes.func,
+  errorLogin: PropTypes.func,
   username: PropTypes.string,
 };
 
