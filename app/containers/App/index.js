@@ -37,24 +37,21 @@ const AppWrapper = styled.div`
 `;
 
 export function App({ successLogin, username, errorLogin }) {
-  const [login, setLogin] = useState('notLogged');
+  const [login, setLogin] = useState('unknown');
   useEffect(() => {
     async function validation() {
       try {
         const auth = await authSessionUser().then(res => res.data);
+        console.log(auth);
         setLogin('isLogged');
         await successLogin(auth);
-        // console.log(`success ${login}`);
       } catch (error) {
-        // console.log(error);
         setLogin('notLogged');
         await errorLogin(error);
-        // console.log(`error ${login}`);
       }
     }
     validation();
   }, [login]);
-
   return (
     <AppWrapper>
       <Helmet
@@ -63,22 +60,24 @@ export function App({ successLogin, username, errorLogin }) {
       >
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
-      {username ? (
+      {console.log(`login: ${login}`)}
+      {login === 'isLogged' ? (
         <div>
           Hello,
           <strong> {username}</strong>
           <button
             type="submit"
             onClick={() => {
+              setLogin('notLogged');
               Cookies.remove('accessToken');
               errorLogin({ error: 'LOGOUT' });
             }}
           >
-            {console.log(login)}
             Logout
           </button>
         </div>
       ) : (
+        // <Redirect to="/login" />
         ''
       )}
       <Header />
