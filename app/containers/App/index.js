@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 // import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import HomePage from 'containers/HomePage/Loadable';
@@ -36,21 +36,27 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ successLogin, username, errorLogin }) {
+export function App({ successLogin, username, errorLogin, err }) {
   const [login, setLogin] = useState('unknown');
   useEffect(() => {
     async function validation() {
-      try {
-        const auth = await authSessionUser().then(res => res.data);
-        console.log(auth);
-        setLogin('isLogged');
+      const auth = await authSessionUser()
+        .then(res => {
+          setLogin('isLogged');
+          return res.data;
+        })
+        .catch(() => {
+          setLogin('notLogged');
+        });
+      if (auth) {
         await successLogin(auth);
-      } catch (error) {
-        setLogin('notLogged');
-        await errorLogin(error);
+      } else {
+        await errorLogin(auth);
       }
     }
-    validation();
+    if (err === undefined) {
+      validation();
+    } else setLogin('notLogged');
   }, [login]);
   return (
     <AppWrapper>
@@ -60,15 +66,13 @@ export function App({ successLogin, username, errorLogin }) {
       >
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
-      {console.log(`login: ${login}`)}
-      {login === 'isLogged' ? (
+      {username ? (
         <div>
           Hello,
           <strong> {username}</strong>
           <button
             type="submit"
             onClick={() => {
-              setLogin('notLogged');
               Cookies.remove('accessToken');
               errorLogin({ error: 'LOGOUT' });
             }}
@@ -82,10 +86,14 @@ export function App({ successLogin, username, errorLogin }) {
       )}
       <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={HomePage}>
+          {!username ? <Redirect to="/login" /> : ''}
+        </Route>
         <Route path="/features" component={FeaturePage} />
         <Route path="/toDos" component={ToDos} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={Login}>
+          {username ? <Redirect to="/" /> : ''}
+        </Route>
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
@@ -98,11 +106,13 @@ App.propTypes = {
   successLogin: PropTypes.func,
   errorLogin: PropTypes.func,
   username: PropTypes.string,
+  err: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   username: state.global.userLogin.name,
   user: state.global.userLogin,
+  err: state.global.err,
 });
 
 const mapDispatchToProps = dispatch => ({

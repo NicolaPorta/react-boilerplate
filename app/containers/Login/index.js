@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 // import PropTypes
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,7 +13,7 @@ import { userLogin } from './actions';
 // create a id key for the injection
 const key = 'login';
 
-export function Login({ requestUserLogin, auth }) {
+export function Login({ requestUserLogin }) {
   useInjectSaga({ key, saga });
   let email;
   let password;
@@ -31,7 +30,6 @@ export function Login({ requestUserLogin, auth }) {
       }}
     >
       <div>
-        {auth.name ? <Redirect to="/" /> : ''}
         <label htmlFor="email">Email</label>
         <br />
         <input
@@ -62,7 +60,6 @@ export function Login({ requestUserLogin, auth }) {
 // set PropTypes
 Login.propTypes = {
   requestUserLogin: PropTypes.func,
-  auth: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
