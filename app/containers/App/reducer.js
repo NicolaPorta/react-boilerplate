@@ -7,8 +7,11 @@
  *
  */
 import produce from 'immer';
+import {
+  LOGIN_SUCCESS_ACTION,
+  LOGIN_ERROR_ACTION,
+} from 'containers/Login/constants';
 import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
-import { LOGIN_SUCCESS_ACTION, LOGIN_ERROR_ACTION } from '../Login/constants';
 
 // The initial state of the App
 export const initialState = {

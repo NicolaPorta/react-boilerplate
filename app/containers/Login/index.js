@@ -13,7 +13,7 @@ import { userLogin } from './actions';
 // create a id key for the injection
 const key = 'login';
 
-export function Login({ requestUserLogin }) {
+export function Login({ requestUserLogin, err }) {
   useInjectSaga({ key, saga });
   let email;
   let password;
@@ -54,16 +54,18 @@ export function Login({ requestUserLogin }) {
         />
       </div>
       <button type="submit">Login</button>
+      {err ? <div>Email or password not found</div> : ''}
     </form>
   );
 }
 // set PropTypes
 Login.propTypes = {
   requestUserLogin: PropTypes.func,
+  err: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  auth: state.global.userLogin,
+  err: state.global.err,
 });
 
 const mapDispatchToProps = dispatch => ({

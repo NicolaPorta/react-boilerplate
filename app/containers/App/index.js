@@ -22,9 +22,8 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import ToDos from 'containers/ToDos';
 import Login from 'containers/Login';
-import authSessionUser from '../../services/authSessionUser';
-import { successUserLogin, errorUserLogin } from '../Login/actions';
-
+import { authUserValidation, logout } from '../Login/actions';
+// import PrivateRoute from '../PrivateRoute';
 import GlobalStyle from '../../global-styles';
 
 const AppWrapper = styled.div`
@@ -36,26 +35,12 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ successLogin, username, errorLogin, err }) {
-  const [login, setLogin] = useState('unknown');
+export function App({ username, err, authUser, userLogout }) {
+  const [login, setLogin] = useState();
   useEffect(() => {
-    async function validation() {
-      const auth = await authSessionUser()
-        .then(res => {
-          setLogin('isLogged');
-          return res.data;
-        })
-        .catch(() => {
-          setLogin('notLogged');
-        });
-      if (auth) {
-        await successLogin(auth);
-      } else {
-        await errorLogin(auth);
-      }
-    }
+    authUser();
     if (err === undefined) {
-      validation();
+      setLogin('isLogged');
     } else setLogin('notLogged');
   }, [login]);
   return (
@@ -74,7 +59,7 @@ export function App({ successLogin, username, errorLogin, err }) {
             type="submit"
             onClick={() => {
               Cookies.remove('accessToken');
-              errorLogin({ error: 'LOGOUT' });
+              userLogout();
             }}
           >
             Logout
@@ -86,6 +71,11 @@ export function App({ successLogin, username, errorLogin, err }) {
       )}
       <Header />
       <Switch>
+        {/* <PrivateRoute
+          component={HomePage}
+          exact path="/"
+          isAuthenticated={username}
+        /> */}
         <Route exact path="/" component={HomePage}>
           {!username ? <Redirect to="/login" /> : ''}
         </Route>
@@ -103,8 +93,8 @@ export function App({ successLogin, username, errorLogin, err }) {
 }
 
 App.propTypes = {
-  successLogin: PropTypes.func,
-  errorLogin: PropTypes.func,
+  userLogout: PropTypes.func,
+  authUser: PropTypes.func,
   username: PropTypes.string,
   err: PropTypes.object,
 };
@@ -116,8 +106,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  successLogin: payload => dispatch(successUserLogin(payload)),
-  errorLogin: payload => dispatch(errorUserLogin(payload)),
+  userLogout: () => dispatch(logout()),
+  authUser: () => dispatch(authUserValidation()),
 });
 
 export default connect(

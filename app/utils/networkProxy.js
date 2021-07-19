@@ -1,6 +1,6 @@
 // services a fianco alla cartella containers
 import axios from 'axios';
-import { saveJWT, getJWT } from './jwtManage';
+import { saveJWT, getJWT } from './jwt';
 // axios instance creation
 const proxy = axios.create();
 proxy.defaults.baseURL = process.env.URL_TO_DO_API;
