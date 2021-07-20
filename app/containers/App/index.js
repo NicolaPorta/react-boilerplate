@@ -6,13 +6,12 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import HomePage from 'containers/HomePage/Loadable';
@@ -23,7 +22,7 @@ import Footer from 'components/Footer';
 import ToDos from 'containers/ToDos';
 import Login from 'containers/Login';
 import { authUserValidation, logout } from '../Login/actions';
-// import PrivateRoute from '../PrivateRoute';
+import PrivateRoute from '../PrivateRoute';
 import GlobalStyle from '../../global-styles';
 
 const AppWrapper = styled.div`
@@ -35,14 +34,10 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ username, err, authUser, userLogout }) {
-  const [login, setLogin] = useState();
+export function App({ username, authUser, userLogout }) {
   useEffect(() => {
     authUser();
-    if (err === undefined) {
-      setLogin('isLogged');
-    } else setLogin('notLogged');
-  }, [login]);
+  }, []);
   return (
     <AppWrapper>
       <Helmet
@@ -66,24 +61,27 @@ export function App({ username, err, authUser, userLogout }) {
           </button>
         </div>
       ) : (
-        // <Redirect to="/login" />
         ''
       )}
       <Header />
       <Switch>
-        {/* <PrivateRoute
+        <PrivateRoute
           component={HomePage}
-          exact path="/"
+          exact
+          path="/"
           isAuthenticated={username}
-        /> */}
-        <Route exact path="/" component={HomePage}>
-          {!username ? <Redirect to="/login" /> : ''}
-        </Route>
-        <Route path="/features" component={FeaturePage} />
-        <Route path="/toDos" component={ToDos} />
-        <Route path="/login" component={Login}>
-          {username ? <Redirect to="/" /> : ''}
-        </Route>
+        />
+        <PrivateRoute
+          component={FeaturePage}
+          path="/features"
+          isAuthenticated={username}
+        />
+        <PrivateRoute
+          component={ToDos}
+          path="/toDos"
+          isAuthenticated={username}
+        />
+        <Route path="/login" component={Login} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
@@ -96,13 +94,13 @@ App.propTypes = {
   userLogout: PropTypes.func,
   authUser: PropTypes.func,
   username: PropTypes.string,
-  err: PropTypes.object,
+  // err: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   username: state.global.userLogin.name,
   user: state.global.userLogin,
-  err: state.global.err,
+  // err: state.global.err,
 });
 
 const mapDispatchToProps = dispatch => ({
