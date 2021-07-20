@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import authSessionUser from 'services/authSessionUser';
-import { successUserLogin, errorUserLogin } from './actions';
+import { successUserLogin, errorUserLogin, successLogout } from './actions';
 import requestLogin from '../../services/requestLogin';
 import { LOGIN_ACTION, USER_AUTH_VALIDATION, USER_LOGOUT } from './constants';
 /**
@@ -29,7 +29,7 @@ export function* validateUser() {
 export function* logout() {
   try {
     // Call our request helper
-    yield put(successUserLogin({}));
+    yield put(successLogout());
   } catch (err) {
     yield put(errorUserLogin(err));
   }

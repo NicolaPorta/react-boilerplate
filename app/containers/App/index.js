@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import HomePage from 'containers/HomePage/Loadable';
@@ -34,7 +34,7 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ username, authUser, userLogout }) {
+export function App({ username, authUser, userLogout, login }) {
   useEffect(() => {
     authUser();
   }, []);
@@ -81,7 +81,9 @@ export function App({ username, authUser, userLogout }) {
           path="/toDos"
           isAuthenticated={username}
         />
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={Login}>
+          {login ? <Redirect to="/" /> : ''}
+        </Route>
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
@@ -94,13 +96,13 @@ App.propTypes = {
   userLogout: PropTypes.func,
   authUser: PropTypes.func,
   username: PropTypes.string,
-  // err: PropTypes.object,
+  login: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   username: state.global.userLogin.name,
   user: state.global.userLogin,
-  // err: state.global.err,
+  login: state.global.userLogin.login,
 });
 
 const mapDispatchToProps = dispatch => ({
