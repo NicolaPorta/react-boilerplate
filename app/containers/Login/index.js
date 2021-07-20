@@ -2,19 +2,17 @@ import React from 'react';
 // import PropTypes
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { compose } from 'redux';
 // import the injecters
 // import { useInjectReducer } from 'utils/injectReducer';
-import { useInjectSaga } from 'utils/injectSaga';
+import injectSaga from 'utils/injectSaga';
 
 // import reducer from './reducer';
 import saga from './saga';
 import { userLogin } from './actions';
 // create a id key for the injection
-const key = 'login';
 
 export function Login({ requestUserLogin }) {
-  useInjectSaga({ key, saga });
   let email;
   let password;
 
@@ -73,8 +71,14 @@ const mapDispatchToProps = dispatch => ({
   requestUserLogin: payload => dispatch(userLogin(payload)),
 });
 
-// connect the store
-export default connect(
+const withSaga = injectSaga({ key: 'login', saga, mode: null });
+
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
+);
+
+export default compose(
+  withSaga,
+  withConnect,
 )(Login);
