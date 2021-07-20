@@ -71,7 +71,7 @@ export function App({ username, authUser, userLogout, login }) {
       ) : (
         ''
       )}
-      <Header />
+      <Header username={username} />
       <Switch>
         <PrivateRoute
           component={HomePage}
