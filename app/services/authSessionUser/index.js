@@ -5,5 +5,5 @@ export default function requestLogin() {
   return proxy({
     method: 'get',
     url: 'users/login/validation',
-  }).then(res => res);
+  });
 }

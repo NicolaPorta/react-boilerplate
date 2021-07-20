@@ -6,7 +6,7 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -35,9 +35,17 @@ const AppWrapper = styled.div`
 `;
 
 export function App({ username, authUser, userLogout, login }) {
+  const [loginUser, setLoginUser] = useState(false);
   useEffect(() => {
-    authUser();
-  }, []);
+    const validation = async () => {
+      await authUser();
+    };
+    validation();
+    if (!loginUser) {
+      setLoginUser(true);
+    }
+  }, [loginUser]);
+
   return (
     <AppWrapper>
       <Helmet

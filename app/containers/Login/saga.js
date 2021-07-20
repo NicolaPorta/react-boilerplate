@@ -20,6 +20,7 @@ export function* validateUser() {
   try {
     // Call our request helper
     const response = yield call(authSessionUser);
+    console.log(response);
     yield put(successUserLogin(response.data));
   } catch (err) {
     yield put(errorUserLogin(err));
