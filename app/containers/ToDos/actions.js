@@ -12,18 +12,20 @@ import {
   DELETE_TODO,
   DELETE_TODO_ERROR,
   ADD_TO_DO_SUCCESS,
+  FETCH_ACTION_SUCCESS,
+  FETCH_ACTION_ERROR,
 } from './constants';
 
-export const callToDoSuccessAction = createResponseAction(CALL_TODO_SUCCESS);
-export const callToDoErrorAction = createResponseAction(CALL_TODO_REJECTED);
+export const fetchSuccessAction = createResponseAction(FETCH_ACTION_SUCCESS);
+export const fetchErrorAction = createResponseAction(FETCH_ACTION_ERROR);
 
 // toDo call success
-// export function changeToDo(toDo) {
-//   return {
-//     type: CALL_TODO_SUCCESS,
-//     payload: toDo,
-//   };
-// }
+export function changeToDo(toDo) {
+  return {
+    type: CALL_TODO_SUCCESS,
+    payload: toDo,
+  };
+}
 
 // toDo call rejected
 export function changeToDoError(err) {

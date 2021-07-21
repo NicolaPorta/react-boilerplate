@@ -3,29 +3,35 @@
  * ToDoList reducer
  *
  */
+import {
+  draftUpdaterFactory,
+  fetchInitialState,
+} from 'helpers/requestActionSupport';
 
 import produce from 'immer';
 import {
-  CALL_TODO_SUCCESS,
-  CALL_TODO_REJECTED,
+  FETCH_ACTION_SUCCESS,
+  FETCH_ACTION_ERROR,
+  CALL_TODO_LIST,
   DELETE_TODO,
   ADD_TO_DO_SUCCESS,
 } from './constants';
 
+const fetchActionList = [CALL_TODO_LIST];
 export const initialState = {
-  toDo: [],
+  ...fetchInitialState(fetchActionList),
 };
 
+const updateDraft = draftUpdaterFactory(
+  FETCH_ACTION_SUCCESS,
+  FETCH_ACTION_ERROR,
+  fetchActionList,
+);
 /* eslint-disable default-case, no-param-reassign */
 const toDosReducer = (state = initialState, action) =>
   produce(state, draft => {
+    updateDraft(draft, action);
     switch (action.type) {
-      case CALL_TODO_SUCCESS:
-        draft.toDo = action.payload;
-        break;
-      case CALL_TODO_REJECTED:
-        draft.err = action.payload;
-        break;
       case DELETE_TODO: {
         const { _id } = action.payload;
         // eslint-disable-next-line no-underscore-dangle

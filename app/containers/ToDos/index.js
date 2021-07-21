@@ -7,24 +7,26 @@ import React from 'react';
 // import PropTypes
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 // import the injecters
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-
+import { CALL_TODO_LIST } from './constants';
 import reducer from './reducer';
 import saga from './saga';
 import { clickToDo, clickDeleteToDo, addToDo } from './actions';
+import { makeSelectResponse, makeSelectToDo } from './selectors';
 
 // create a id key for the injection
 const key = 'toDos';
 
-export function ToDos({ toDoClick, deleteClick, newToDo, toDoList }) {
+export function ToDos({ toDoClick, deleteClick, newToDo, response }) {
   // inject Hooks for reducers and sagas
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-
-  const toDoListCount = (toDoList && toDoList.toDo.length) || 0;
+  const toDoList = response[CALL_TODO_LIST];
+  const toDoListCount = (toDoList && toDoList.data.length) || 0;
 
   let input;
 
@@ -49,7 +51,7 @@ export function ToDos({ toDoClick, deleteClick, newToDo, toDoList }) {
         <button type="submit">ADD</button>
       </form>
       {toDoListCount ? (
-        toDoList.toDo.map(toDo => {
+        toDoList.data.map(toDo => {
           const { _id } = toDo;
           return (
             <p key={_id}>
@@ -72,12 +74,14 @@ ToDos.propTypes = {
   toDoClick: PropTypes.func,
   deleteClick: PropTypes.func,
   newToDo: PropTypes.func,
-  toDoList: PropTypes.object,
+  // toDoList: PropTypes.object,
+  response: PropTypes.object,
 };
 
 // map props and functions
-const mapStateToProps = state => ({
-  toDoList: state.toDos,
+const mapStateToProps = createStructuredSelector({
+  toDoList: makeSelectToDo(),
+  response: makeSelectResponse(),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -87,7 +91,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // connect the store
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ToDos);
+);
+
+export default compose(withConnect)(ToDos);

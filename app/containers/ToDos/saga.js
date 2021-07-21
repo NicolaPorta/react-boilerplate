@@ -1,14 +1,13 @@
 /**
  * Gets the list of the toDos from JsonPlaceholder
  */
-import sagaGeneratorFactory from 'helpers/requestActionSupport/sagaGeneratorFactory';
+import { sagaGeneratorFactory } from 'helpers/requestActionSupport';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   addToDoInList,
-  changeToDoError,
   clickDeleteToDoError,
-  callToDoSuccessAction,
-  callToDoErrorAction,
+  fetchSuccessAction,
+  fetchErrorAction,
 } from './actions';
 import getToDoList from '../../services/getToDoList';
 import deleteToDo from '../../services/deleteToDo';
@@ -18,8 +17,8 @@ import { CALL_ADD_TO_DO, CALL_TODO_LIST, DELETE_TODO } from './constants';
  * ToDo list request/response handler
  */
 const callToDoGenerator = sagaGeneratorFactory(
-  callToDoSuccessAction,
-  callToDoErrorAction,
+  fetchSuccessAction,
+  fetchErrorAction,
 );
 
 export function* addNewToDo(action) {
@@ -29,7 +28,7 @@ export function* addNewToDo(action) {
     const newToDo = yield call(addToDoList, todo);
     yield put(addToDoInList(newToDo.data));
   } catch (err) {
-    yield put(changeToDoError(err));
+    yield put(fetchErrorAction(err));
   }
 }
 

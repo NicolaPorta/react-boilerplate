@@ -3,6 +3,7 @@
  */
 
 import { createSelector } from 'reselect';
+import { makeSelectFactory } from 'helpers/requestActionSupport';
 import { initialState } from './reducer';
 
 const selectGlobal = state => state.global || initialState;
@@ -44,6 +45,7 @@ const makeSelectUserLogin = () =>
     selectGlobal,
     globalState => globalState.userLogin,
   );
+const makeResponseGlobal = makeSelectFactory(selectGlobal);
 
 const makeSelectUserName = () =>
   createSelector(
@@ -65,4 +67,5 @@ export {
   makeSelectLocation,
   makeSelectUserName,
   makeSelectLogin,
+  makeResponseGlobal,
 };

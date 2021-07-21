@@ -42,7 +42,6 @@ export function App({ username, authUser, userLogout, login }) {
   useEffect(() => {
     authUser();
   }, []);
-
   return (
     <AppWrapper>
       <Helmet
@@ -114,18 +113,7 @@ const mapDispatchToProps = dispatch => ({
   authUser: () => dispatch(authUserValidation()),
 });
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps,
-// )(App);
-
 const withSaga = injectSaga({ key: 'app', saga, mode: null });
-
-// // connect the store
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps,
-// )(Login);
 
 const withConnect = connect(
   mapStateToProps,
