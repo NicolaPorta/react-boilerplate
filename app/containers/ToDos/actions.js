@@ -3,7 +3,7 @@
  * ToDo actions
  *
  */
-
+import createResponseAction from 'helpers/requestActionSupport/createResponseAction';
 import {
   CALL_TODO_REJECTED,
   CALL_TODO_SUCCESS,
@@ -14,13 +14,16 @@ import {
   ADD_TO_DO_SUCCESS,
 } from './constants';
 
+export const callToDoSuccessAction = createResponseAction(CALL_TODO_SUCCESS);
+export const callToDoErrorAction = createResponseAction(CALL_TODO_REJECTED);
+
 // toDo call success
-export function changeToDo(toDo) {
-  return {
-    type: CALL_TODO_SUCCESS,
-    payload: toDo,
-  };
-}
+// export function changeToDo(toDo) {
+//   return {
+//     type: CALL_TODO_SUCCESS,
+//     payload: toDo,
+//   };
+// }
 
 // toDo call rejected
 export function changeToDoError(err) {
