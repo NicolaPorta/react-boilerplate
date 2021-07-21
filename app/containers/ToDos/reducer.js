@@ -34,12 +34,18 @@ const toDosReducer = (state = initialState, action) =>
     switch (action.type) {
       case DELETE_TODO: {
         const { _id } = action.payload;
-        // eslint-disable-next-line no-underscore-dangle
-        draft.toDo = state.toDo.filter(toDo => toDo._id !== _id);
+        const { key } = action;
+        const toDos = state.response[key].data;
+        draft.response[key].data = toDos.filter(
+          // eslint-disable-next-line no-underscore-dangle
+          toDo => toDo._id !== _id,
+        );
         break;
       }
       case ADD_TO_DO_SUCCESS: {
-        draft.toDo[draft.toDo.length] = action.payload.todo;
+        const { key } = action;
+        const draftData = draft.response[key].data;
+        draftData[draftData.length] = action.payload.todo;
       }
     }
   });

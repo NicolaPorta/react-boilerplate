@@ -42,9 +42,10 @@ export function clickToDo() {
   };
 }
 
-export function clickDeleteToDo(toDo) {
+export function clickDeleteToDo(toDo, key) {
   return {
     type: DELETE_TODO,
+    key,
     payload: toDo,
   };
 }
@@ -62,9 +63,10 @@ export function addToDo(toDo) {
   };
 }
 
-export function addToDoInList(toDo) {
+export function addToDoInList(toDo, key) {
   return {
     type: ADD_TO_DO_SUCCESS,
+    key,
     payload: toDo,
   };
 }

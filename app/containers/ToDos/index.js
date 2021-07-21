@@ -20,13 +20,11 @@ import { makeSelectResponse, makeSelectToDo } from './selectors';
 
 // create a id key for the injection
 const key = 'toDos';
-
 export function ToDos({ toDoClick, deleteClick, newToDo, response }) {
   // inject Hooks for reducers and sagas
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
   const toDoList = response[CALL_TODO_LIST];
-  const toDoListCount = (toDoList && toDoList.data.length) || 0;
 
   let input;
 
@@ -38,8 +36,10 @@ export function ToDos({ toDoClick, deleteClick, newToDo, response }) {
       <form
         onSubmit={e => {
           e.preventDefault();
-          newToDo({ toDo: input.value });
-          input.value = '';
+          if (input.value !== '') {
+            newToDo({ toDo: input.value, key: CALL_TODO_LIST });
+            input.value = '';
+          }
         }}
       >
         <input
@@ -50,13 +50,16 @@ export function ToDos({ toDoClick, deleteClick, newToDo, response }) {
         />
         <button type="submit">ADD</button>
       </form>
-      {toDoListCount ? (
+      {toDoList.data ? (
         toDoList.data.map(toDo => {
           const { _id } = toDo;
           return (
             <p key={_id}>
               {toDo.text}
-              <button type="submit" onClick={() => deleteClick(toDo)}>
+              <button
+                type="submit"
+                onClick={() => deleteClick(toDo, CALL_TODO_LIST)}
+              >
                 Delete
               </button>
             </p>
@@ -86,7 +89,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   toDoClick: () => dispatch(clickToDo()),
-  deleteClick: payload => dispatch(clickDeleteToDo(payload)),
+  deleteClick: (payload, actionKey) =>
+    dispatch(clickDeleteToDo(payload, actionKey)),
   newToDo: payload => dispatch(addToDo(payload)),
 });
 

@@ -26,7 +26,7 @@ export function* addNewToDo(action) {
     const todo = action.payload;
     // Call our request helper (see 'services/getToDoList')
     const newToDo = yield call(addToDoList, todo);
-    yield put(addToDoInList(newToDo.data));
+    yield put(addToDoInList(newToDo.data, todo.key));
   } catch (err) {
     yield put(fetchErrorAction(err));
   }
