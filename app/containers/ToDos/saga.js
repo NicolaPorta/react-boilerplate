@@ -2,12 +2,14 @@
  * Gets the list of the toDos from JsonPlaceholder
  */
 import { sagaGeneratorFactory } from 'helpers/requestActionSupport';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects';
 import {
-  addToDoInList,
-  clickDeleteToDoError,
   fetchSuccessAction,
   fetchErrorAction,
+  deleteSuccessAction,
+  deleteErrorAction,
+  addToDoSuccessAction,
+  addToDoErrorAction,
 } from './actions';
 import getToDoList from '../../services/getToDoList';
 import deleteToDo from '../../services/deleteToDo';
@@ -21,32 +23,21 @@ const callToDoGenerator = sagaGeneratorFactory(
   fetchErrorAction,
 );
 
-export function* addNewToDo(action) {
-  try {
-    const todo = action.payload;
-    // Call our request helper (see 'services/getToDoList')
-    const newToDo = yield call(addToDoList, todo);
-    yield put(addToDoInList(newToDo.data, todo.key));
-  } catch (err) {
-    yield put(fetchErrorAction(err));
-  }
-}
+const deleteToDoGenerator = sagaGeneratorFactory(
+  deleteSuccessAction,
+  deleteErrorAction,
+);
 
-export function* toDoDelete(action) {
-  const { _id } = action.payload;
-  try {
-    // Call our request helper (see 'services/axiosDeleteToDo')
-    yield call(deleteToDo, _id);
-  } catch (err) {
-    yield clickDeleteToDoError(err);
-  }
-}
+const addToDoGenerator = sagaGeneratorFactory(
+  addToDoSuccessAction,
+  addToDoErrorAction,
+);
 
 /**
  * Root saga manages watcher lifecycle
  */
 export default function* getToDoData() {
-  yield takeLatest(DELETE_TODO, toDoDelete);
+  yield takeLatest(DELETE_TODO, deleteToDoGenerator(deleteToDo));
   yield takeLatest(CALL_TODO_LIST, callToDoGenerator(getToDoList));
-  yield takeLatest(CALL_ADD_TO_DO, addNewToDo);
+  yield takeLatest(CALL_ADD_TO_DO, addToDoGenerator(addToDoList));
 }

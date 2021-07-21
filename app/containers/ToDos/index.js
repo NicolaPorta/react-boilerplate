@@ -58,7 +58,7 @@ export function ToDos({ toDoClick, deleteClick, newToDo, response }) {
               {toDo.text}
               <button
                 type="submit"
-                onClick={() => deleteClick(toDo, CALL_TODO_LIST)}
+                onClick={() => deleteClick(_id, CALL_TODO_LIST)}
               >
                 Delete
               </button>

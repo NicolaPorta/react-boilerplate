@@ -1,15 +1,18 @@
 /*
  *
- * Call TODO constants
+ * TODO constants
  *
  */
 const root = 'boilerplate/ToDos/';
+// Fetch todos
 export const CALL_TODO_LIST = `${root}CALL_TODO_LIST`;
-export const CALL_TODO_SUCCESS = `${root}CALL_TODO_SUCCESS`;
-export const CALL_TODO_REJECTED = `${root}CALL_TODO_REJECTED`;
-export const DELETE_TODO = `${root}DELETE_TODO`;
-export const DELETE_TODO_ERROR = `${root}DELETE_TODO_ERROR`;
-export const CALL_ADD_TO_DO = `${root}CALL_ADD_TO_DO`;
-export const ADD_TO_DO_SUCCESS = `${root}ADD_TO_DO_SUCCESS`;
 export const FETCH_ACTION_SUCCESS = `${root}FETCH_ACTION_SUCCESS`;
 export const FETCH_ACTION_ERROR = `${root}FETCH_ACTION_ERROR`;
+// Delete todo
+export const DELETE_TODO = `${root}DELETE_TODO`;
+export const DELETE_ACTION_SUCCESS = `${root}DELETE_ACTION_SUCCESS`;
+export const DELETE_ACTION_ERROR = `${root}DELETE_ACTION_ERROR`;
+// Add todo
+export const CALL_ADD_TO_DO = `${root}CALL_ADD_TO_DO`;
+export const ADD_TODO_ACTION_SUCCESS = `${root}ADD_TODO_ACTION_SUCCESS`;
+export const ADD_TODO_ACTION_ERROR = `${root}ADD_TODO_ACTION_ERROR`;
