@@ -1,3 +1,4 @@
+import { createResponseAction } from 'helpers/requestActionSupport';
 import {
   LOGIN_ACTION,
   LOGIN_SUCCESS_ACTION,
@@ -6,6 +7,9 @@ import {
   USER_LOGOUT,
   USER_LOGOUT_SUCCESS,
 } from './constants';
+
+export const loginSuccessAction = createResponseAction(LOGIN_SUCCESS_ACTION);
+export const loginErrorAction = createResponseAction(LOGIN_ERROR_ACTION);
 
 export function userLogin(info) {
   return {

@@ -47,10 +47,8 @@ const appReducer = (state = initialState, action) =>
         break;
 
       case LOGIN_SUCCESS_ACTION: {
-        const { name, surname } = action.payload;
         draft.userLogin = {
-          name,
-          surname,
+          ...action.payload,
           login: true,
         };
         delete draft.err;

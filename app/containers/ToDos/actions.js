@@ -3,7 +3,7 @@
  * ToDo actions
  *
  */
-import createResponseAction from 'helpers/requestActionSupport/createResponseAction';
+import { createResponseAction } from 'helpers/requestActionSupport';
 import {
   CALL_TODO_LIST,
   FETCH_ACTION_SUCCESS,
