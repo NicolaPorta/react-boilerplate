@@ -23,7 +23,7 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import ToDos from 'containers/ToDos';
 import Login from 'containers/Login';
-import { makeSelectUserName, makeSelectLogin } from 'containers/App/selectors';
+import { makeResponseUserLogin } from './selectors';
 import { authUserValidation, logout } from '../Login/actions';
 import PrivateRoute from '../PrivateRoute';
 import GlobalStyle from '../../global-styles';
@@ -38,9 +38,9 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ username, authUser, userLogout, login }) {
+export function App({ userLogout, user }) {
   useEffect(() => {
-    authUser();
+    // authUser();
   }, []);
   return (
     <AppWrapper>
@@ -50,10 +50,10 @@ export function App({ username, authUser, userLogout, login }) {
       >
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
-      {username ? (
+      {user.name ? (
         <div>
           Hello,
-          <strong> {username}</strong>
+          <strong> {user.name}</strong>
           <button
             type="submit"
             onClick={() => {
@@ -67,26 +67,26 @@ export function App({ username, authUser, userLogout, login }) {
       ) : (
         ''
       )}
-      <Header username={username} />
+      <Header username={user.name} />
       <Switch>
         <PrivateRoute
           component={HomePage}
           exact
           path="/"
-          isAuthenticated={username}
+          isAuthenticated={user.name}
         />
         <PrivateRoute
           component={FeaturePage}
           path="/features"
-          isAuthenticated={username}
+          isAuthenticated={user.name}
         />
         <PrivateRoute
           component={ToDos}
           path="/toDos"
-          isAuthenticated={username}
+          isAuthenticated={user.name}
         />
         <Route path="/login" component={Login}>
-          {login ? <Redirect to="/" /> : ''}
+          {user.login ? <Redirect to="/" /> : ''}
         </Route>
         <Route path="" component={NotFoundPage} />
       </Switch>
@@ -98,14 +98,12 @@ export function App({ username, authUser, userLogout, login }) {
 
 App.propTypes = {
   userLogout: PropTypes.func,
-  authUser: PropTypes.func,
-  username: PropTypes.string,
-  login: PropTypes.bool,
+  // authUser: PropTypes.func,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  username: makeSelectUserName(),
-  login: makeSelectLogin(),
+  user: makeResponseUserLogin(),
 });
 
 const mapDispatchToProps = dispatch => ({

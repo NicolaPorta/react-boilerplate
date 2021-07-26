@@ -5,8 +5,12 @@
 import { createSelector } from 'reselect';
 import { makeSelectFactory } from 'helpers/requestActionSupport';
 import { initialState } from './reducer';
+import { LOGIN_ACTION } from '../Login/constants';
 
 const selectGlobal = state => state.global || initialState;
+
+const selectUserLogin = state =>
+  state.global.userLogin || initialState.userLogin;
 
 const selectRouter = state => state.router;
 
@@ -40,24 +44,8 @@ const makeSelectLocation = () =>
     routerState => routerState.location,
   );
 
-const makeSelectUserLogin = () =>
-  createSelector(
-    selectGlobal,
-    globalState => globalState.userLogin,
-  );
-const makeResponseGlobal = makeSelectFactory(selectGlobal);
+const makeResponseUserLogin = makeSelectFactory(selectUserLogin, LOGIN_ACTION);
 
-const makeSelectUserName = () =>
-  createSelector(
-    makeSelectUserLogin(),
-    userLoginState => userLoginState.name,
-  );
-
-const makeSelectLogin = () =>
-  createSelector(
-    makeSelectUserLogin(),
-    userLoginState => userLoginState.login,
-  );
 export {
   selectGlobal,
   makeSelectCurrentUser,
@@ -65,7 +53,5 @@ export {
   makeSelectError,
   makeSelectRepos,
   makeSelectLocation,
-  makeSelectUserName,
-  makeSelectLogin,
-  makeResponseGlobal,
+  makeResponseUserLogin,
 };

@@ -8,12 +8,18 @@
  */
 import produce from 'immer';
 import {
+  // draftUpdaterFactory,
+  fetchInitialState,
+} from 'helpers/requestActionSupport';
+
+import {
   LOGIN_SUCCESS_ACTION,
   LOGIN_ERROR_ACTION,
   USER_LOGOUT_SUCCESS,
+  LOGIN_ACTION,
 } from 'containers/Login/constants';
 import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
-
+const loginActionList = [LOGIN_ACTION];
 // The initial state of the App
 export const initialState = {
   loading: false,
@@ -22,9 +28,10 @@ export const initialState = {
   userData: {
     repositories: false,
   },
-  userLogin: {},
+  userLogin: {
+    ...fetchInitialState(loginActionList),
+  },
 };
-
 /* eslint-disable default-case, no-param-reassign */
 const appReducer = (state = initialState, action) =>
   produce(state, draft => {
@@ -47,7 +54,8 @@ const appReducer = (state = initialState, action) =>
         break;
 
       case LOGIN_SUCCESS_ACTION: {
-        draft.userLogin = {
+        const { fetchKey } = action;
+        draft.userLogin.response[fetchKey] = {
           ...action.payload,
           login: true,
         };
@@ -57,11 +65,11 @@ const appReducer = (state = initialState, action) =>
 
       case LOGIN_ERROR_ACTION:
         draft.err = action.payload;
-        draft.userLogin = {};
+        draft.userLogin = { ...fetchInitialState(loginActionList) };
         break;
 
       case USER_LOGOUT_SUCCESS:
-        draft.userLogin = {};
+        draft.userLogin = { ...fetchInitialState(loginActionList) };
         break;
     }
   });
