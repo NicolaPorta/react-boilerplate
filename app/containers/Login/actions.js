@@ -4,7 +4,7 @@ import {
   LOGIN_SUCCESS_ACTION,
   LOGIN_ERROR_ACTION,
   USER_AUTH_VALIDATION,
-  USER_LOGOUT,
+  LOGOUT_ACTION,
   LOGOUT_SUCCESS_ACTION,
   LOGOUT_ERROR_ACTION,
 } from './constants';
@@ -44,7 +44,7 @@ export function authUserValidation(key) {
 
 export function logout(key) {
   return {
-    type: USER_LOGOUT,
+    type: LOGOUT_ACTION,
     key,
   };
 }
