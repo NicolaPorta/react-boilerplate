@@ -7,8 +7,10 @@ export default function sagaGeneratorFactory(successAction, errorAction) {
     function*(reqAction) {
       const key = reqAction.key || reqAction.type;
       try {
-        const result = yield call(service, reqAction.payload);
-        yield put(successAction(key, result.data));
+        if (service) {
+          const result = yield call(service, reqAction.payload);
+          yield put(successAction(key, result.data));
+        } else yield put(successAction(key, {}));
         // yield checkForSnackbars(key, reqAction);
       } catch (error) {
         // eslint-disable-next-line no-console

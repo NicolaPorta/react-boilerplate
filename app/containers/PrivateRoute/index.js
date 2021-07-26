@@ -21,7 +21,7 @@ const PrivateRoute = ({
 PrivateRoute.defaultProps = { redirect: '/login' };
 
 PrivateRoute.propTypes = {
-  isAuthenticated: PropTypes.string,
+  isAuthenticated: PropTypes.object,
   component: PropTypes.elementType.isRequired,
   redirect: PropTypes.string,
   // path: PropTypes.string,

@@ -8,7 +8,7 @@ import HeaderLink from './HeaderLink';
 import Banner from './banner.jpg';
 import messages from './messages';
 
-function Header({ username }) {
+function Header({ user }) {
   return (
     <div>
       <A href="https://www.reactboilerplate.com/">
@@ -24,7 +24,7 @@ function Header({ username }) {
         <HeaderLink to="/toDos">
           <FormattedMessage {...messages.toDos} />
         </HeaderLink>
-        {!username ? (
+        {!user ? (
           <HeaderLink to="/login">
             <FormattedMessage {...messages.users} />
           </HeaderLink>
@@ -37,7 +37,7 @@ function Header({ username }) {
 }
 
 Header.propTypes = {
-  username: PropTypes.string,
+  user: PropTypes.object,
 };
 
 export default Header;

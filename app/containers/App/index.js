@@ -28,6 +28,7 @@ import { authUserValidation, logout } from '../Login/actions';
 import PrivateRoute from '../PrivateRoute';
 import GlobalStyle from '../../global-styles';
 import saga from './saga';
+import { LOGIN_ACTION } from '../Login/constants';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -38,10 +39,11 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ userLogout, user }) {
+export function App({ authUser, userLogout, response }) {
   useEffect(() => {
-    // authUser();
+    authUser(LOGIN_ACTION);
   }, []);
+  const user = response[LOGIN_ACTION].data;
   return (
     <AppWrapper>
       <Helmet
@@ -50,7 +52,7 @@ export function App({ userLogout, user }) {
       >
         <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
-      {user.name ? (
+      {user ? (
         <div>
           Hello,
           <strong> {user.name}</strong>
@@ -58,7 +60,7 @@ export function App({ userLogout, user }) {
             type="submit"
             onClick={() => {
               Cookies.remove('accessToken');
-              userLogout();
+              userLogout(LOGIN_ACTION);
             }}
           >
             Logout
@@ -67,26 +69,22 @@ export function App({ userLogout, user }) {
       ) : (
         ''
       )}
-      <Header username={user.name} />
+      <Header username={user} />
       <Switch>
         <PrivateRoute
           component={HomePage}
           exact
           path="/"
-          isAuthenticated={user.name}
+          isAuthenticated={user}
         />
         <PrivateRoute
           component={FeaturePage}
           path="/features"
-          isAuthenticated={user.name}
+          isAuthenticated={user}
         />
-        <PrivateRoute
-          component={ToDos}
-          path="/toDos"
-          isAuthenticated={user.name}
-        />
+        <PrivateRoute component={ToDos} path="/toDos" isAuthenticated={user} />
         <Route path="/login" component={Login}>
-          {user.login ? <Redirect to="/" /> : ''}
+          {user ? <Redirect to="/" /> : ''}
         </Route>
         <Route path="" component={NotFoundPage} />
       </Switch>
@@ -98,17 +96,17 @@ export function App({ userLogout, user }) {
 
 App.propTypes = {
   userLogout: PropTypes.func,
-  // authUser: PropTypes.func,
-  user: PropTypes.object,
+  authUser: PropTypes.func,
+  response: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  user: makeResponseUserLogin(),
+  response: makeResponseUserLogin(),
 });
 
 const mapDispatchToProps = dispatch => ({
   userLogout: () => dispatch(logout()),
-  authUser: () => dispatch(authUserValidation()),
+  authUser: payload => dispatch(authUserValidation(payload)),
 });
 
 const withSaga = injectSaga({ key: 'app', saga, mode: null });

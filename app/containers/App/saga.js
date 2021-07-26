@@ -1,37 +1,26 @@
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
+import { takeLatest, takeEvery } from 'redux-saga/effects';
+import { sagaGeneratorFactory } from 'helpers/requestActionSupport';
 import authSessionUser from 'services/authSessionUser';
 import {
-  errorUserLogin,
-  successLogout,
-  successUserLogin,
+  logoutSuccessAction,
+  logoutErrorAction,
+  loginSuccessAction,
+  loginErrorAction,
 } from '../Login/actions';
 import { USER_AUTH_VALIDATION, USER_LOGOUT } from '../Login/constants';
 /**
  * ToDo list request/response handler
  */
+const authGenerator = sagaGeneratorFactory(
+  loginSuccessAction,
+  loginErrorAction,
+);
 
-export function* validateUser() {
-  try {
-    // Call our request helper
-    const response = yield call(authSessionUser);
-    yield put(successUserLogin(response.data));
-  } catch (err) {
-    yield put(errorUserLogin(err));
-  }
-}
-
-export function* logout() {
-  try {
-    // Call our request helper
-    yield put(successLogout());
-  } catch (err) {
-    yield put(errorUserLogin(err));
-  }
-}
+const logout = sagaGeneratorFactory(logoutSuccessAction, logoutErrorAction);
 /**
  * Root saga manages watcher lifecycle
  */
 export default function* userLoginResponse() {
-  yield takeEvery(USER_AUTH_VALIDATION, validateUser);
-  yield takeLatest(USER_LOGOUT, logout);
+  yield takeEvery(USER_AUTH_VALIDATION, authGenerator(authSessionUser));
+  yield takeLatest(USER_LOGOUT, logout());
 }

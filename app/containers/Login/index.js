@@ -25,8 +25,10 @@ export function Login({ requestUserLogin }) {
           password: password.value,
         };
         await requestUserLogin(info);
-        email.value = '';
-        password.value = '';
+        if (email || password) {
+          email.value = '';
+          password.value = '';
+        }
       }}
     >
       <div>

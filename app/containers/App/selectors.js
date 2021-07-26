@@ -5,7 +5,6 @@
 import { createSelector } from 'reselect';
 import { makeSelectFactory } from 'helpers/requestActionSupport';
 import { initialState } from './reducer';
-import { LOGIN_ACTION } from '../Login/constants';
 
 const selectGlobal = state => state.global || initialState;
 
@@ -44,7 +43,7 @@ const makeSelectLocation = () =>
     routerState => routerState.location,
   );
 
-const makeResponseUserLogin = makeSelectFactory(selectUserLogin, LOGIN_ACTION);
+const makeResponseUserLogin = makeSelectFactory(selectUserLogin);
 
 export {
   selectGlobal,

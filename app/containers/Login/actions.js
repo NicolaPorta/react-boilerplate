@@ -5,11 +5,14 @@ import {
   LOGIN_ERROR_ACTION,
   USER_AUTH_VALIDATION,
   USER_LOGOUT,
-  USER_LOGOUT_SUCCESS,
+  LOGOUT_SUCCESS_ACTION,
+  LOGOUT_ERROR_ACTION,
 } from './constants';
 
 export const loginSuccessAction = createResponseAction(LOGIN_SUCCESS_ACTION);
 export const loginErrorAction = createResponseAction(LOGIN_ERROR_ACTION);
+export const logoutSuccessAction = createResponseAction(LOGOUT_SUCCESS_ACTION);
+export const logoutErrorAction = createResponseAction(LOGOUT_ERROR_ACTION);
 
 export function userLogin(info) {
   return {
@@ -32,20 +35,16 @@ export function errorUserLogin(info) {
   };
 }
 
-export function authUserValidation() {
+export function authUserValidation(key) {
   return {
     type: USER_AUTH_VALIDATION,
+    key,
   };
 }
 
-export function logout() {
+export function logout(key) {
   return {
     type: USER_LOGOUT,
-  };
-}
-
-export function successLogout() {
-  return {
-    type: USER_LOGOUT_SUCCESS,
+    key,
   };
 }
