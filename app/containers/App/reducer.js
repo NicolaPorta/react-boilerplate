@@ -16,8 +16,7 @@ import {
   LOGIN_ACTION,
   LOGIN_SUCCESS_ACTION,
   LOGIN_ERROR_ACTION,
-  LOGOUT_SUCCESS_ACTION,
-  LOGOUT_ERROR_ACTION,
+  LOGOUT_ACTION,
 } from 'containers/Login/constants';
 import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
 const loginActionList = [LOGIN_ACTION];
@@ -61,15 +60,8 @@ const appReducer = (state = initialState, action) =>
         draft.loading = false;
         break;
 
-      case LOGOUT_SUCCESS_ACTION:
+      case LOGOUT_ACTION:
         draft.userLogin = { ...fetchInitialState(loginActionList) };
-        break;
-
-      case LOGOUT_ERROR_ACTION:
-        draft.userLogin.err = {
-          error: 'ErrorLogout',
-          message: 'Logout failed',
-        };
         break;
     }
   });

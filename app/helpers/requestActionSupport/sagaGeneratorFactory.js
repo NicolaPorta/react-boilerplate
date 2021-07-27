@@ -14,8 +14,8 @@ export default function sagaGeneratorFactory(successAction, errorAction) {
         // yield checkForSnackbars(key, reqAction);
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
-        yield put(errorAction(key, error));
+        console.error(error.response.data);
+        yield put(errorAction(key, error.response.data));
         // yield checkForSnackbars(key, reqAction, error);
       }
     };

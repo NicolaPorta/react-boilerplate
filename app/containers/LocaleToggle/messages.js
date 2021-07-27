@@ -5,7 +5,7 @@
  */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'boilerplate.containers.LocaleToggle';
+export const scope = 'NicolaApp.containers.LocaleToggle';
 
 export default defineMessages({
   en: {
@@ -15,5 +15,9 @@ export default defineMessages({
   de: {
     id: `${scope}.de`,
     defaultMessage: 'de',
+  },
+  it: {
+    id: `${scope}.it`,
+    defaultMessage: 'it',
   },
 });

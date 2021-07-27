@@ -3,7 +3,7 @@
  * TODO constants
  *
  */
-const root = 'boilerplate/ToDos/';
+const root = 'NicolaApp/ToDos/';
 // Fetch todos
 export const CALL_TODO_LIST = `${root}CALL_TODO_LIST`;
 export const FETCH_ACTION_SUCCESS = `${root}FETCH_ACTION_SUCCESS`;

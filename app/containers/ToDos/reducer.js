@@ -33,13 +33,11 @@ const toDosReducer = (state = initialState, action) =>
     updateDraft(draft, action);
     switch (action.type) {
       case DELETE_ACTION_SUCCESS: {
-        // eslint-disable-next-line no-underscore-dangle
         const { _id } = action.payload.todo;
         const { fetchKey } = action;
         const toDos = state.response[fetchKey].data;
         draft.response[fetchKey].data = toDos.filter(
-          // eslint-disable-next-line no-underscore-dangle
-          toDo => toDo._id !== _id,
+          ({ _id: toDoId }) => toDoId !== _id,
         );
         break;
       }

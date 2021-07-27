@@ -8,8 +8,7 @@ import { initialState } from './reducer';
 
 const selectGlobal = state => state.global || initialState;
 
-const selectUserLogin = state =>
-  state.global.userLogin || initialState.userLogin;
+const selectUserLogin = state => state.global.userLogin;
 
 const selectRouter = state => state.router;
 

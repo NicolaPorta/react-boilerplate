@@ -5,7 +5,7 @@
  */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'boilerplate.components.Header';
+export const scope = 'NicolaApp.components.Header';
 
 export default defineMessages({
   home: {
@@ -17,11 +17,11 @@ export default defineMessages({
     defaultMessage: 'Features',
   },
   toDos: {
-    id: `${scope}.testNicola`,
-    defaultMessage: 'ToDoList',
+    id: `${scope}.toDosButton`,
+    defaultMessage: 'ToDo List',
   },
-  users: {
-    id: `${scope}.users`,
-    defaultMessage: 'Login',
+  user: {
+    id: `${scope}.loginButtonText`,
+    defaultMessage: 'LOGIN',
   },
 });

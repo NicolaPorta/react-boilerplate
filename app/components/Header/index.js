@@ -15,21 +15,20 @@ function Header({ user }) {
         <Img src={Banner} alt="react-boilerplate - Logo" />
       </A>
       <NavBar>
-        <HeaderLink to="/">
-          <FormattedMessage {...messages.home} />
-        </HeaderLink>
-        <HeaderLink to="/features">
-          <FormattedMessage {...messages.features} />
-        </HeaderLink>
-        <HeaderLink to="/toDos">
-          <FormattedMessage {...messages.toDos} />
-        </HeaderLink>
         {!user ? (
-          <HeaderLink to="/login">
-            <FormattedMessage {...messages.users} />
-          </HeaderLink>
+          <FormattedMessage {...messages.user} />
         ) : (
-          ''
+          <React.Fragment>
+            <HeaderLink to="/">
+              <FormattedMessage {...messages.home} />
+            </HeaderLink>
+            <HeaderLink to="/features">
+              <FormattedMessage {...messages.features} />
+            </HeaderLink>
+            <HeaderLink to="/toDos">
+              <FormattedMessage {...messages.toDos} />
+            </HeaderLink>
+          </React.Fragment>
         )}
       </NavBar>
     </div>

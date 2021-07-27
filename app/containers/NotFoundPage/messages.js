@@ -5,7 +5,7 @@
  */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'boilerplate.containers.NotFoundPage';
+export const scope = 'NicolaApp.containers.NotFoundPage';
 
 export default defineMessages({
   header: {

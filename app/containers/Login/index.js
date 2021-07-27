@@ -4,13 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 // import the injecters
-// import { useInjectReducer } from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-// import reducer from './reducer';
 import saga from './saga';
 import { userLogin } from './actions';
-// create a id key for the injection
 
 export function Login({ requestUserLogin }) {
   let email;
@@ -18,13 +15,13 @@ export function Login({ requestUserLogin }) {
 
   return (
     <form
-      onSubmit={async e => {
+      onSubmit={e => {
         e.preventDefault();
         const info = {
           email: email.value,
           password: password.value,
         };
-        await requestUserLogin(info);
+        requestUserLogin(info);
         if (email || password) {
           email.value = '';
           password.value = '';
@@ -62,12 +59,7 @@ export function Login({ requestUserLogin }) {
 // set PropTypes
 Login.propTypes = {
   requestUserLogin: PropTypes.func,
-  // err: PropTypes.object,
 };
-
-const mapStateToProps = state => ({
-  err: state.global.err,
-});
 
 const mapDispatchToProps = dispatch => ({
   requestUserLogin: payload => dispatch(userLogin(payload)),
@@ -76,7 +68,7 @@ const mapDispatchToProps = dispatch => ({
 const withSaga = injectSaga({ key: 'login', saga, mode: null });
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 
