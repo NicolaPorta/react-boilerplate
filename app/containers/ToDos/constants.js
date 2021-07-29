@@ -16,3 +16,4 @@ export const DELETE_ACTION_ERROR = `${root}DELETE_ACTION_ERROR`;
 export const CALL_ADD_TO_DO = `${root}CALL_ADD_TO_DO`;
 export const ADD_TODO_ACTION_SUCCESS = `${root}ADD_TODO_ACTION_SUCCESS`;
 export const ADD_TODO_ACTION_ERROR = `${root}ADD_TODO_ACTION_ERROR`;
+export const DELETE_TODO_LIST = `${root}DELETE_TODO_LIST`;

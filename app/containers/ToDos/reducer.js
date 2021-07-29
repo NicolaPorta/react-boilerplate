@@ -15,6 +15,7 @@ import {
   CALL_TODO_LIST,
   DELETE_ACTION_SUCCESS,
   ADD_TODO_ACTION_SUCCESS,
+  DELETE_TODO_LIST,
 } from './constants';
 
 const fetchActionList = [CALL_TODO_LIST];
@@ -46,6 +47,11 @@ const toDosReducer = (state = initialState, action) =>
         const { fetchKey } = action;
         const toDos = draft.response[fetchKey].data;
         toDos.push(todo);
+        break;
+      }
+      case DELETE_TODO_LIST: {
+        const { key } = action;
+        draft.response[key] = {};
       }
     }
   });

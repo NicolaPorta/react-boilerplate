@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 import { compose } from 'redux';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
@@ -28,7 +29,10 @@ import { authUserValidation, logout } from '../Login/actions';
 import PrivateRoute from '../PrivateRoute';
 import GlobalStyle from '../../global-styles';
 import saga from './saga';
+import reducer from '../ToDos/reducer';
 import { LOGIN_ACTION } from '../Login/constants';
+import { deleteToDoList } from './actions';
+import { CALL_TODO_LIST } from '../ToDos/constants';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -39,18 +43,21 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ authUser, userLogout, response }) {
+export function App({ authUser, userLogout, response, deleteToDos }) {
   useEffect(() => {
     authUser(LOGIN_ACTION);
   }, []);
   const user = response[LOGIN_ACTION].data;
+  if (!user) {
+    deleteToDos(CALL_TODO_LIST);
+  }
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
+        titleTemplate="%s - Nicola React App"
+        defaultTitle="Nicola React App"
       >
-        <meta name="description" content="A React.js Boilerplate application" />
+        <meta name="description" content="A Nicola React App application" />
       </Helmet>
       {user ? (
         <div>
@@ -96,6 +103,7 @@ export function App({ authUser, userLogout, response }) {
 
 App.propTypes = {
   userLogout: PropTypes.func,
+  deleteToDos: PropTypes.func,
   authUser: PropTypes.func,
   response: PropTypes.object,
 };
@@ -107,9 +115,11 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   userLogout: payload => dispatch(logout(payload)),
   authUser: payload => dispatch(authUserValidation(payload)),
+  deleteToDos: payload => dispatch(deleteToDoList(payload)),
 });
 
 const withSaga = injectSaga({ key: 'app', saga, mode: null });
+const withReducer = injectReducer({ key: 'app', reducer, mode: null });
 
 const withConnect = connect(
   mapStateToProps,
@@ -118,5 +128,6 @@ const withConnect = connect(
 
 export default compose(
   withSaga,
+  withReducer,
   withConnect,
 )(App);
