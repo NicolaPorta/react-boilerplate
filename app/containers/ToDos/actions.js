@@ -38,6 +38,18 @@ export function clickDeleteToDo(toDo, key) {
     type: DELETE_TODO,
     key,
     payload: toDo,
+    snackbar: {
+      error: {
+        message: 'Delete failed',
+        severity: 'ERROR',
+        hidden: false,
+      },
+      success: {
+        message: 'ToDo has been deleted successfully',
+        severity: 'SUCCESS',
+        hidden: false,
+      },
+    },
   };
 }
 
@@ -46,5 +58,17 @@ export function addToDo(toDo) {
     type: CALL_ADD_TO_DO,
     key: toDo.key,
     payload: toDo,
+    snackbar: {
+      error: {
+        message: 'Add ToDo failed',
+        severity: 'ERROR',
+        hidden: false,
+      },
+      success: {
+        message: 'ToDo has been added successfully',
+        severity: 'SUCCESS',
+        hidden: false,
+      },
+    },
   };
 }
