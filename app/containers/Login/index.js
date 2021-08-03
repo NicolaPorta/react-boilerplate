@@ -34,16 +34,16 @@ export function Login({ requestUserLogin }) {
           };
           requestUserLogin(info);
           if (email || password) {
-            email.value = '';
             password.value = '';
           }
         }}
       >
         <div>
           <TextField
-            required
-            id="standard-required"
+            id="standard"
             label="Username"
+            type="email"
+            variant="outlined"
             inputRef={node => {
               email = node;
             }}
@@ -55,6 +55,7 @@ export function Login({ requestUserLogin }) {
             id="standard-password-input"
             label="Password"
             type="password"
+            variant="outlined"
             inputRef={node => {
               password = node;
             }}

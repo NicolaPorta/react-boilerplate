@@ -75,6 +75,7 @@ export function App({ authUser, userLogout, response, deleteToDos }) {
             <strong> {user.name} </strong>
             <Button
               variant="contained"
+              color="secondary"
               type="submit"
               onClick={() => {
                 Cookies.remove('accessToken');

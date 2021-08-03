@@ -44,7 +44,7 @@ function* showSnackbarSuccess(key, reqAction) {
   // const severity = snackbarSeverity || 'info';
   yield put(
     actions.enqueueSnackbar(message, {
-      key,
+      key: `${key}:${uuid()}`,
       // severity,
     }),
   );
