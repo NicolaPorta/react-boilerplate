@@ -30,7 +30,7 @@ function* showSnackbarError(key, reqAction, error) {
 
   yield put(
     actions.enqueueSnackbar(message, {
-      key: `${key}:${uuid()}`,
+      key: `${key}/${uuid()}`,
       // severity,
     }),
   );
@@ -44,7 +44,7 @@ function* showSnackbarSuccess(key, reqAction) {
   // const severity = snackbarSeverity || 'info';
   yield put(
     actions.enqueueSnackbar(message, {
-      key: `${key}:${uuid()}`,
+      key: `${key}/${uuid()}`,
       // severity,
     }),
   );
