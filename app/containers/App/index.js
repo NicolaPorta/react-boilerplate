@@ -14,6 +14,8 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { compose } from 'redux';
@@ -42,6 +44,11 @@ const AppWrapper = styled.div`
   padding: 0 16px;
   flex-direction: column;
 `;
+const useStyles = makeStyles(theme => ({
+  root: {
+    margin: theme.spacing(1),
+  },
+}));
 
 export function App({ authUser, userLogout, response, deleteToDos }) {
   useEffect(() => {
@@ -51,6 +58,7 @@ export function App({ authUser, userLogout, response, deleteToDos }) {
   if (!user) {
     deleteToDos(CALL_TODO_LIST);
   }
+  const classes = useStyles();
   return (
     <AppWrapper>
       <Helmet
@@ -60,19 +68,24 @@ export function App({ authUser, userLogout, response, deleteToDos }) {
         <meta name="description" content="A Nicola React App application" />
       </Helmet>
       {user ? (
-        <div>
-          Hello,
-          <strong> {user.name}</strong>
-          <button
-            type="submit"
-            onClick={() => {
-              Cookies.remove('accessToken');
-              userLogout(LOGIN_ACTION);
-            }}
-          >
-            Logout
-          </button>
-        </div>
+        <React.Fragment>
+          <div className={classes.root}>
+            <br />
+            Hello,
+            <strong> {user.name} </strong>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => {
+                Cookies.remove('accessToken');
+                userLogout(LOGIN_ACTION);
+              }}
+            >
+              Logout
+            </Button>
+          </div>
+          <br />
+        </React.Fragment>
       ) : (
         ''
       )}

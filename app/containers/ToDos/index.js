@@ -12,6 +12,8 @@ import { createStructuredSelector } from 'reselect';
 // import the injecters
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { CALL_TODO_LIST } from './constants';
 import reducer from './reducer';
 import saga from './saga';
@@ -30,9 +32,15 @@ export function ToDos({ toDoClick, deleteClick, newToDo, response }) {
 
   return (
     <React.Fragment>
-      <button type="submit" onClick={e => toDoClick(e)}>
-        CLICK
-      </button>
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        onClick={e => toDoClick(e)}
+      >
+        SHOW TODO LIST
+      </Button>
+      <br />
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -42,26 +50,41 @@ export function ToDos({ toDoClick, deleteClick, newToDo, response }) {
           }
         }}
       >
-        <input
+        <TextField
+          id="outlined-basic"
+          label="New ToDo"
+          variant="outlined"
           type="text"
-          ref={node => {
+          color="secondary"
+          size="small"
+          inputRef={node => {
             input = node;
           }}
         />
-        <button type="submit">ADD</button>
+        &rarr;
+        <Button
+          type="submit"
+          color="secondary"
+          variant="contained"
+          size="large"
+        >
+          ADD
+        </Button>
       </form>
       {toDoList.data ? (
         toDoList.data.map(toDo => {
           const { _id } = toDo;
           return (
             <p key={_id}>
-              {toDo.text}
-              <button
+              {toDo.text} &rarr;
+              <Button
                 type="submit"
+                variant="outlined"
+                color="secondary"
                 onClick={() => deleteClick(_id, CALL_TODO_LIST)}
               >
                 Delete
-              </button>
+              </Button>
             </p>
           );
         })

@@ -5,18 +5,23 @@ import A from './A';
 import Img from './Img';
 import NavBar from './NavBar';
 import HeaderLink from './HeaderLink';
-import Banner from './banner.jpg';
+import Banner from './rectlogo.png';
 import messages from './messages';
 
 function Header({ user }) {
   return (
     <div>
-      <A href="https://www.reactboilerplate.com/">
+      <A href="https://react-redux.js.org/">
+        <br />
         <Img src={Banner} alt="react-boilerplate - Logo" />
+        <br />
       </A>
       <NavBar>
         {!user ? (
-          <FormattedMessage {...messages.user} />
+          <React.Fragment>
+            <br />
+            <FormattedMessage {...messages.user} />
+          </React.Fragment>
         ) : (
           <React.Fragment>
             <HeaderLink to="/">

@@ -7,9 +7,10 @@ import { Helmet } from 'react-helmet';
 // import the injecters
 import injectSaga from 'utils/injectSaga';
 
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import saga from './saga';
 import { userLogin } from './actions';
-
 export function Login({ requestUserLogin }) {
   let email;
   let password;
@@ -23,6 +24,7 @@ export function Login({ requestUserLogin }) {
           content="A Nicola React App application Login"
         />
       </Helmet>
+      <br />
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -38,31 +40,32 @@ export function Login({ requestUserLogin }) {
         }}
       >
         <div>
-          <label htmlFor="email">Email</label>
-          <br />
-          <input
-            name="email"
-            type="email"
-            placeholder="Insert email"
-            ref={node => {
+          <TextField
+            required
+            id="standard-required"
+            label="Username"
+            inputRef={node => {
               email = node;
             }}
           />
         </div>
+        <br />
         <div>
-          <label htmlFor="password">Password</label>
-          <br />
-          <input
-            name="password"
+          <TextField
+            id="standard-password-input"
+            label="Password"
             type="password"
-            placeholder="Insert password"
-            ref={node => {
+            inputRef={node => {
               password = node;
             }}
           />
         </div>
-        <button type="submit">Login</button>
+        <br />
+        <Button type="submit" variant="contained" color="secondary">
+          Login
+        </Button>
       </form>
+      <br />
     </React.Fragment>
   );
 }
