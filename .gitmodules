@@ -1,0 +1,3 @@
+[submodule "nicolaApp-components"]
+	path = nicolaApp-components
+	url = https://github.com/NicolaPorta/nicolaApp-components.git
