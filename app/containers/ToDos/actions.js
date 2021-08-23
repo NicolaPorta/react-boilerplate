@@ -3,33 +3,29 @@
  * ToDo actions
  *
  */
-
+import { createResponseAction } from 'helpers/requestActionSupport';
 import {
-  CALL_TODO_REJECTED,
-  CALL_TODO_SUCCESS,
   CALL_TODO_LIST,
-  CALL_ADD_TO_DO,
+  FETCH_ACTION_SUCCESS,
+  FETCH_ACTION_ERROR,
   DELETE_TODO,
-  DELETE_TODO_ERROR,
-  ADD_TO_DO_SUCCESS,
+  DELETE_ACTION_SUCCESS,
+  DELETE_ACTION_ERROR,
+  CALL_ADD_TO_DO,
+  ADD_TODO_ACTION_SUCCESS,
+  ADD_TODO_ACTION_ERROR,
 } from './constants';
 
-// toDo call success
-export function changeToDo(toDo) {
-  return {
-    type: CALL_TODO_SUCCESS,
-    payload: toDo,
-  };
-}
+export const fetchSuccessAction = createResponseAction(FETCH_ACTION_SUCCESS);
+export const fetchErrorAction = createResponseAction(FETCH_ACTION_ERROR);
 
-// toDo call rejected
-export function changeToDoError(err) {
-  return {
-    type: CALL_TODO_REJECTED,
-    payload: err,
-  };
-}
+export const deleteSuccessAction = createResponseAction(DELETE_ACTION_SUCCESS);
+export const deleteErrorAction = createResponseAction(DELETE_ACTION_ERROR);
 
+export const addToDoSuccessAction = createResponseAction(
+  ADD_TODO_ACTION_SUCCESS,
+);
+export const addToDoErrorAction = createResponseAction(ADD_TODO_ACTION_ERROR);
 // toDo click for activate saga middleware
 export function clickToDo() {
   return {
@@ -37,29 +33,42 @@ export function clickToDo() {
   };
 }
 
-export function clickDeleteToDo(toDo) {
+export function clickDeleteToDo(toDo, key) {
   return {
     type: DELETE_TODO,
+    key,
     payload: toDo,
-  };
-}
-
-export function clickDeleteToDoError() {
-  return {
-    type: DELETE_TODO_ERROR,
+    snackbar: {
+      error: {
+        message: 'Delete failed',
+        severity: 'ERROR',
+        hidden: false,
+      },
+      success: {
+        message: 'ToDo has been deleted successfully',
+        severity: 'SUCCESS',
+        hidden: false,
+      },
+    },
   };
 }
 
 export function addToDo(toDo) {
   return {
     type: CALL_ADD_TO_DO,
+    key: toDo.key,
     payload: toDo,
-  };
-}
-
-export function addToDoInList(toDo) {
-  return {
-    type: ADD_TO_DO_SUCCESS,
-    payload: toDo,
+    snackbar: {
+      error: {
+        message: 'Add ToDo failed',
+        severity: 'ERROR',
+        hidden: false,
+      },
+      success: {
+        message: 'ToDo has been added successfully',
+        severity: 'SUCCESS',
+        hidden: false,
+      },
+    },
   };
 }

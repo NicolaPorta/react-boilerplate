@@ -12,6 +12,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { theme } from '@spindox/siae-theme';
+import SnackbarProvider from '@spindox/siae-snackbar-notistack';
 import FontFaceObserver from 'fontfaceobserver';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
@@ -44,15 +48,19 @@ openSansObserver.load().then(() => {
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
-
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </LanguageProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <LanguageProvider messages={messages}>
+          <ConnectedRouter history={history}>
+            <SnackbarProvider>
+              <App />
+            </SnackbarProvider>
+          </ConnectedRouter>
+        </LanguageProvider>
+      </ThemeProvider>
     </Provider>,
     MOUNT_NODE,
   );

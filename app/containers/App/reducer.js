@@ -6,10 +6,20 @@
  * add it to the switch statement in the reducer function
  *
  */
-
 import produce from 'immer';
-import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
+import {
+  draftUpdaterFactory,
+  fetchInitialState,
+} from 'helpers/requestActionSupport';
 
+import {
+  LOGIN_ACTION,
+  LOGIN_SUCCESS_ACTION,
+  LOGIN_ERROR_ACTION,
+  LOGOUT_ACTION,
+} from 'containers/Login/constants';
+import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
+const loginActionList = [LOGIN_ACTION];
 // The initial state of the App
 export const initialState = {
   loading: false,
@@ -18,11 +28,20 @@ export const initialState = {
   userData: {
     repositories: false,
   },
+  userLogin: {
+    ...fetchInitialState(loginActionList),
+  },
 };
 
+const updateDraftLogin = draftUpdaterFactory(
+  LOGIN_SUCCESS_ACTION,
+  LOGIN_ERROR_ACTION,
+  loginActionList,
+);
 /* eslint-disable default-case, no-param-reassign */
 const appReducer = (state = initialState, action) =>
   produce(state, draft => {
+    updateDraftLogin(draft.userLogin, action);
     switch (action.type) {
       case LOAD_REPOS:
         draft.loading = true;
@@ -39,6 +58,10 @@ const appReducer = (state = initialState, action) =>
       case LOAD_REPOS_ERROR:
         draft.error = action.error;
         draft.loading = false;
+        break;
+
+      case LOGOUT_ACTION:
+        draft.userLogin = { ...fetchInitialState(loginActionList) };
         break;
     }
   });
