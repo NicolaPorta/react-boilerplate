@@ -27,8 +27,9 @@
   "NicolaApp.containers.HomePage.tryme.atPrefix": "",
   "NicolaApp.containers.HomePage.tryme.header": "",
   "NicolaApp.containers.HomePage.tryme.message": "",
-  "NicolaApp.containers.LocaleToggle.de": "",
-  "NicolaApp.containers.LocaleToggle.en": "",
-  "NicolaApp.containers.LocaleToggle.it": "",
-  "NicolaApp.containers.NotFoundPage.header": ""
+  "NicolaApp.containers.LocaleSelect.de": "",
+  "NicolaApp.containers.LocaleSelect.en": "",
+  "NicolaApp.containers.LocaleSelect.it": "",
+  "NicolaApp.containers.NotFoundPage.header": "",
+  "NicolaApp.global.ErrorMissingCredentials": ""
 }

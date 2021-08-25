@@ -17,12 +17,12 @@ export function userLogin(info) {
     snackbar: {
       error: {
         message: 'Login error',
-        severity: 'ERROR',
+        severity: 'error',
         hidden: false,
       },
       success: {
         message: 'Logged in successfully',
-        severity: 'SUCCESS',
+        severity: 'success',
       },
     },
   };
@@ -33,14 +33,14 @@ export function authUserValidation(key) {
     type: USER_AUTH_VALIDATION,
     key,
     snackbar: {
-      error: {
-        message: 'Token validation failed',
-        severity: 'ERROR',
-        hidden: false,
-      },
+      // error: {
+      //   message: 'Token validation failed',
+      //   severity: 'error',
+      //   hidden: false,
+      // },
       success: {
         message: 'Welcome',
-        severity: 'SUCCESS',
+        severity: 'success',
       },
     },
   };

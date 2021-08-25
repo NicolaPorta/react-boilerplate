@@ -1,6 +1,7 @@
 import { put } from 'redux-saga/effects';
 import { actions } from '@spindox/siae-snackbar-notistack';
 import uuid from 'uuid/v1';
+import messages from 'global/messages';
 
 export default function* checkForSnackbars(key, reqAction, error) {
   if (error) {
@@ -21,17 +22,20 @@ export default function* checkForSnackbars(key, reqAction, error) {
 function* showSnackbarError(key, reqAction, error) {
   const { snackbar } = reqAction;
   const snackbarMessage = getSnackbarField('error', 'message', snackbar);
-  // const snackbarSeverity = getSnackbarField('error', 'severity', snackbar);
-  // const severity = snackbarSeverity || 'error';
+  const snackbarSeverity = getSnackbarField('error', 'severity', snackbar);
+  const severity = snackbarSeverity || 'error';
   // const message = snackbarMessage;
+  const errorCode =
+    error.response && error.response.data && error.response.data.error;
+  const localizedMessage = messages[errorCode];
   const message =
     (error.response && error.response.data && error.response.data.message) ||
     snackbarMessage;
 
   yield put(
-    actions.enqueueSnackbar(message, {
+    actions.enqueueSnackbar(localizedMessage || message, {
       key: `${key}/${uuid()}`,
-      // severity,
+      severity,
     }),
   );
 }
@@ -39,13 +43,13 @@ function* showSnackbarError(key, reqAction, error) {
 function* showSnackbarSuccess(key, reqAction) {
   const { snackbar } = reqAction;
   const snackbarMessage = getSnackbarField('success', 'message', snackbar);
-  // const snackbarSeverity = getSnackbarField('success', 'severity', snackbar);
+  const snackbarSeverity = getSnackbarField('success', 'severity', snackbar);
   const message = snackbarMessage;
-  // const severity = snackbarSeverity || 'info';
+  const severity = snackbarSeverity || 'info';
   yield put(
     actions.enqueueSnackbar(message, {
       key: `${key}/${uuid()}`,
-      // severity,
+      severity,
     }),
   );
 }

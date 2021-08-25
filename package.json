@@ -65,7 +65,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.4.3",
-    "@material-ui/core": "^4.9.14",
+    "@material-ui/core": "4.9.1",
+    "@nicola/localeselect": "file:nicolaApp-components/components/LocaleSelect",
     "@spindox/siae-icons-library": "^3.5.4",
     "@spindox/siae-snackbar-notistack": "^1.1.0",
     "@spindox/siae-theme": "^4.0.0",

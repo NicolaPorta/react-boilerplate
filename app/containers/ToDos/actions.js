@@ -39,14 +39,9 @@ export function clickDeleteToDo(toDo, key) {
     key,
     payload: toDo,
     snackbar: {
-      error: {
-        message: 'Delete failed',
-        severity: 'ERROR',
-        hidden: false,
-      },
       success: {
         message: 'ToDo has been deleted successfully',
-        severity: 'SUCCESS',
+        severity: 'success',
         hidden: false,
       },
     },
@@ -59,14 +54,9 @@ export function addToDo(toDo) {
     key: toDo.key,
     payload: toDo,
     snackbar: {
-      error: {
-        message: 'Add ToDo failed',
-        severity: 'ERROR',
-        hidden: false,
-      },
       success: {
         message: 'ToDo has been added successfully',
-        severity: 'SUCCESS',
+        severity: 'success',
         hidden: false,
       },
     },

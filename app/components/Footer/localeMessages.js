@@ -1,11 +1,6 @@
-/*
- * LocaleToggle Messages
- *
- * This contains all the text for the LanguageToggle component.
- */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'NicolaApp.containers.LocaleToggle';
+export const scope = 'NicolaApp.containers.LocaleSelect';
 
 export default defineMessages({
   en: {

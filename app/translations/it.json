@@ -27,8 +27,9 @@
   "NicolaApp.containers.HomePage.tryme.atPrefix": "@",
   "NicolaApp.containers.HomePage.tryme.header": "Provami!",
   "NicolaApp.containers.HomePage.tryme.message": "Mostra i progetti Github di",
-  "NicolaApp.containers.LocaleToggle.de": "de",
-  "NicolaApp.containers.LocaleToggle.en": "en",
-  "NicolaApp.containers.LocaleToggle.it": "it",
-  "NicolaApp.containers.NotFoundPage.header": "Pagina non trovata"
+  "NicolaApp.containers.LocaleSelect.de": "de",
+  "NicolaApp.containers.LocaleSelect.en": "en",
+  "NicolaApp.containers.LocaleSelect.it": "it",
+  "NicolaApp.containers.NotFoundPage.header": "Pagina non trovata",
+  "NicolaApp.global.ErrorMissingCredentials": "Necessarie Mail e Password"
 }
